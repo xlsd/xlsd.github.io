@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="用递归算法实现iOS补位动画 前言  其实我没有写代码的天赋，很多事情也都做不好。只是感慨，生活时常会令人感到沮丧。 1写这个动画，主要是为了运用递归算法。 需求如下:  点击任一个方块，在它之后的方块都向前移动进行补位。   效果如下：  12345实现思路：1.创建的方块数要比展示的方块多一个。2.将被点击的方块的Frame赋给它之后的方块3.如果被点击的方块之后的方块之后，还有方块，那就把它">
+<meta name="description" content="用递归算法实现iOS补位动画 前言  1写这个动画，主要是为了运用递归算法。 需求如下:  点击任一个方块，在它之后的方块都向前移动进行补位。   效果如下：  12345实现思路：1.创建的方块数要比展示的方块多一个。2.将被点击的方块的Frame赋给它之后的方块3.如果被点击的方块之后的方块之后，还有方块，那就把它之后的方块的Frame再赋给它之后的方块的之后的方块。🙂（这样描述晕不晕？）4">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用递归算法实现iOS补位动画">
 <meta property="og:url" content="http://yoursite.com/2018/12/02/用递归算法实现iOS补位动画/index.html">
 <meta property="og:site_name" content="大象席地而坐">
-<meta property="og:description" content="用递归算法实现iOS补位动画 前言  其实我没有写代码的天赋，很多事情也都做不好。只是感慨，生活时常会令人感到沮丧。 1写这个动画，主要是为了运用递归算法。 需求如下:  点击任一个方块，在它之后的方块都向前移动进行补位。   效果如下：  12345实现思路：1.创建的方块数要比展示的方块多一个。2.将被点击的方块的Frame赋给它之后的方块3.如果被点击的方块之后的方块之后，还有方块，那就把它">
+<meta property="og:description" content="用递归算法实现iOS补位动画 前言  1写这个动画，主要是为了运用递归算法。 需求如下:  点击任一个方块，在它之后的方块都向前移动进行补位。   效果如下：  12345实现思路：1.创建的方块数要比展示的方块多一个。2.将被点击的方块的Frame赋给它之后的方块3.如果被点击的方块之后的方块之后，还有方块，那就把它之后的方块的Frame再赋给它之后的方块的之后的方块。🙂（这样描述晕不晕？）4">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/12/02/用递归算法实现iOS补位动画/demo.gif">
-<meta property="og:updated_time" content="2018-12-02T14:12:13.035Z">
+<meta property="og:updated_time" content="2018-12-03T13:39:59.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用递归算法实现iOS补位动画">
-<meta name="twitter:description" content="用递归算法实现iOS补位动画 前言  其实我没有写代码的天赋，很多事情也都做不好。只是感慨，生活时常会令人感到沮丧。 1写这个动画，主要是为了运用递归算法。 需求如下:  点击任一个方块，在它之后的方块都向前移动进行补位。   效果如下：  12345实现思路：1.创建的方块数要比展示的方块多一个。2.将被点击的方块的Frame赋给它之后的方块3.如果被点击的方块之后的方块之后，还有方块，那就把它">
+<meta name="twitter:description" content="用递归算法实现iOS补位动画 前言  1写这个动画，主要是为了运用递归算法。 需求如下:  点击任一个方块，在它之后的方块都向前移动进行补位。   效果如下：  12345实现思路：1.创建的方块数要比展示的方块多一个。2.将被点击的方块的Frame赋给它之后的方块3.如果被点击的方块之后的方块之后，还有方块，那就把它之后的方块的Frame再赋给它之后的方块的之后的方块。🙂（这样描述晕不晕？）4">
 <meta name="twitter:image" content="http://yoursite.com/2018/12/02/用递归算法实现iOS补位动画/demo.gif">
 
 
@@ -326,8 +326,7 @@
         <h4 id="用递归算法实现iOS补位动画"><a href="#用递归算法实现iOS补位动画" class="headerlink" title="用递归算法实现iOS补位动画"></a>用递归算法实现iOS补位动画</h4><blockquote>
 <p>前言</p>
 </blockquote>
-<pre><code>其实我没有写代码的天赋，很多事情也都做不好。只是感慨，生活时常会令人感到沮丧。
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">写这个动画，主要是为了运用递归算法。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">写这个动画，主要是为了运用递归算法。</span><br></pre></td></tr></table></figure>
 <p>需求如下:</p>
 <ul>
 <li>点击任一个方块，在它之后的方块都向前移动进行补位。 </li>

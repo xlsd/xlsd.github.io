@@ -307,6 +307,7 @@
 <blockquote>
 <p>给Xcode 开辟专属内存可以加快读取<code>DriverData</code>中的数据，加速Xcode编译和运行速度。使Xcode编译和运行需要从磁盘读写文件，改成在内存中进行（第一次除外）。</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 脚本内容</span><br><span class="line">#!/bin/bash</span><br><span class="line">// 设置 ram disk 的名称</span><br><span class="line">RAMDISK=XcodeRAM</span><br><span class="line"></span><br><span class="line">// 设置 ram disk 的大小，这里是 1024 MB</span><br><span class="line">SIZE=1024  </span><br><span class="line"></span><br><span class="line">// 分配给 ramdisk 相应大小的空间</span><br><span class="line">diskutil erasevolume HFS+ $RAMDISK `hdiutil attach -nomount ram://$[SIZE*2048]` </span><br><span class="line"></span><br><span class="line">// 打开元数据索引，如果你使用 Xcode 内部的调试工具这是必须的。因为调试工具使用元数据索引来查询符号连接</span><br><span class="line">mdutil -i on /Volumes/$RAMDISK</span><br></pre></td></tr></table></figure>
 <p>我使用了几天了，感觉确实可以提高不少Xcode运行速度，有兴趣可以配置下。<br>配置如下：</p>
 <ul>
 <li>终端运行上面的脚本文件。</li>
@@ -469,8 +470,7 @@
             <h4 id="用递归算法实现iOS补位动画"><a href="#用递归算法实现iOS补位动画" class="headerlink" title="用递归算法实现iOS补位动画"></a>用递归算法实现iOS补位动画</h4><blockquote>
 <p>前言</p>
 </blockquote>
-<pre><code>其实我没有写代码的天赋，很多事情也都做不好。只是感慨，生活时常会令人感到沮丧。
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">写这个动画，主要是为了运用递归算法。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">写这个动画，主要是为了运用递归算法。</span><br></pre></td></tr></table></figure>
 <p>需求如下:</p>
 <ul>
 <li>点击任一个方块，在它之后的方块都向前移动进行补位。 </li>
