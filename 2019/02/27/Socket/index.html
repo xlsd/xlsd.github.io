@@ -82,18 +82,18 @@
 <meta name="description" content="前言  近期会对项目中的技术点进行整理，项目开发了近两年，已经比较稳定，感谢优品的两年，感谢导师马杰马总，还有调皮的雷总，大家都是好同学。先从Socket在iOS项目中的应用谈起，谈到iOS中的Socket，用的较多的是CocoaAsyncSocket，在此基础上，使用Socket更加便捷。Socket通常用在需要服务端给客户端实时发送消息的场景，比如股票的实时行情，比如实时的消息。那早期的聊天">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Socket在iOS中的应用">
-<meta property="og:url" content="http://yoursite.com/2019/02/27/两年总结(一)/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/02/27/Socket/index.html">
 <meta property="og:site_name" content="大象席地而坐">
 <meta property="og:description" content="前言  近期会对项目中的技术点进行整理，项目开发了近两年，已经比较稳定，感谢优品的两年，感谢导师马杰马总，还有调皮的雷总，大家都是好同学。先从Socket在iOS项目中的应用谈起，谈到iOS中的Socket，用的较多的是CocoaAsyncSocket，在此基础上，使用Socket更加便捷。Socket通常用在需要服务端给客户端实时发送消息的场景，比如股票的实时行情，比如实时的消息。那早期的聊天">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/02/27/两年总结(一)/两年总结/1.png">
-<meta property="og:image" content="http://yoursite.com/2019/02/27/两年总结(一)/两年总结/2.png">
-<meta property="og:image" content="http://yoursite.com/2019/02/27/两年总结(一)/两年总结/3.png">
-<meta property="og:updated_time" content="2019-03-05T09:51:33.394Z">
+<meta property="og:image" content="http://yoursite.com/2019/02/27/Socket/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/27/Socket/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/27/Socket/3.png">
+<meta property="og:updated_time" content="2019-03-05T11:06:53.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Socket在iOS中的应用">
 <meta name="twitter:description" content="前言  近期会对项目中的技术点进行整理，项目开发了近两年，已经比较稳定，感谢优品的两年，感谢导师马杰马总，还有调皮的雷总，大家都是好同学。先从Socket在iOS项目中的应用谈起，谈到iOS中的Socket，用的较多的是CocoaAsyncSocket，在此基础上，使用Socket更加便捷。Socket通常用在需要服务端给客户端实时发送消息的场景，比如股票的实时行情，比如实时的消息。那早期的聊天">
-<meta name="twitter:image" content="http://yoursite.com/2019/02/27/两年总结(一)/两年总结/1.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/27/Socket/1.png">
 
 
 
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/27/两年总结(一)/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/27/Socket/">
 
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/两年总结(一)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/Socket/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="薛林">
@@ -333,9 +333,9 @@
 <p>#####使用Socket可能遇到的问题:<br>1.粘包或窜包<br>2.多线程操作导致Socket的连接异常</p>
 <p>先说第一种导致粘包或窜包的原因：<br>TCP是基于Socket的通信的，TCP是一种流式传输协议（stream protocol）。这就意味着数据是以字节流的形式传递给接收者的，没有固有的”报文”或”报文边界”的概念。从这方面来说，读取TCP数据就像从串行端口读取数据一样，无法预先得知在一次指定的读调用中会返回多少字节（也就是说能知道总共要读多少，但是不知道具体某一次读多少）。<br>如以下场景：</p>
 <ul>
-<li>从A主机向B主机推送两条消息D1和D2<br><img src="/2019/02/27/两年总结(一)/两年总结/1.png" alt="image"></li>
-<li>理想的传输是<br><img src="/2019/02/27/两年总结(一)/两年总结/2.png" alt="image"></li>
-<li>实际的传输过程可能是<br><img src="/2019/02/27/两年总结(一)/两年总结/3.png" alt="image"></li>
+<li>从A主机向B主机推送两条消息D1和D2<br><img src="/2019/02/27/Socket/1.png" alt="image"></li>
+<li>理想的传输是<br><img src="/2019/02/27/Socket/2.png" alt="image"></li>
+<li>实际的传输过程可能是<br><img src="/2019/02/27/Socket/3.png" alt="image"></li>
 </ul>
 <p>这就可能造成粘包或窜包。<br>一般针对粘包的分包（或称拆包）的方法是：给每个数据包添加头部，头部中包含数据包的长度，这样接收到数据后，通过读取头部的长度字段，便知道每一个数据包的实际长度了，再根据长度去读取指定长度的数据便能获取到正确的数据了。<br>完整的数据包 = 服务号 + 数据长度 + 数据<br>数据包头 = ld(4B) + length(4B) 共占用8个字节<br>数据包 = length(假设100个字节)<br>所以这条消息的长度是108字节，要先知道一条数据的边界，只要知道了数据的length字段即可。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 服务号	+	数据包长度		 + 	数据包内容</span><br><span class="line"> 	 1    |  DataLength  |       Data</span><br><span class="line">(4bytes) |	 (4bytes)   |    (100bytes)</span><br></pre></td></tr></table></figure>
