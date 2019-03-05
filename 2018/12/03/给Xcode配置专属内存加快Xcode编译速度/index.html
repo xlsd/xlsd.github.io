@@ -86,15 +86,15 @@
 <meta property="og:site_name" content="大象席地而坐">
 <meta property="og:description" content="加速Xcode编辑及运行速度的方法  给Xcode 开辟专属内存可以加快读取DriverData中的数据，加速Xcode编译和运行速度。使Xcode编译和运行需要从磁盘读写文件，改成在内存中进行（第一次除外）。  12345678910111213// 脚本内容#!/bin/bash// 设置 ram disk 的名称RAMDISK=XcodeRAM// 设置 ram disk 的大小，这里是 1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15433845962062.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15438133987457.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15438135652819.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15438136790326.jpg">
-<meta property="og:updated_time" content="2018-12-09T13:55:25.856Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-3bbb35b1c585fa3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-c8b06058ff7c6dd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-30fae0f1dc7c1bad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-4da254b59359edd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-05T11:19:50.197Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="给Xcode配置专属内存加快Xcode编译速度">
 <meta name="twitter:description" content="加速Xcode编辑及运行速度的方法  给Xcode 开辟专属内存可以加快读取DriverData中的数据，加速Xcode编译和运行速度。使Xcode编译和运行需要从磁盘读写文件，改成在内存中进行（第一次除外）。  12345678910111213// 脚本内容#!/bin/bash// 设置 ram disk 的名称RAMDISK=XcodeRAM// 设置 ram disk 的大小，这里是 1">
-<meta name="twitter:image" content="http://yoursite.com/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15433845962062.jpg">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2276492-3bbb35b1c585fa3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -314,7 +314,7 @@
 <li>终端运行上面的脚本文件。</li>
 <li>修改Xcode <code>DriverData</code>路径如下</li>
 </ul>
-<p><img src="/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15433845962062.jpg" alt="image"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2276492-3bbb35b1c585fa3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
 <p>注意：由于开辟的专属内存是占用电脑内存的，并不是真正的磁盘分区，所以电脑关机后改磁盘会消失，开机需要重新运行脚本文件重新进行分区。</p>
 <p>配置开机启动<br>一.在MAC程序中找到自动操作（图标是一个小机器人）。<br>搜索shell后</p>
 <ol>
@@ -322,11 +322,11 @@
 <li>双击”运行Shell脚本”</li>
 </ol>
 <p>配置如下：</p>
-<p><img src="/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15438133987457.jpg" alt="image"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2276492-c8b06058ff7c6dd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
 <p>保存为应用程序。</p>
 <p>二.在开机启动项中加入该应用程序，如</p>
-<p><img src="/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15438135652819.jpg" alt="image"></p>
-<p>三.脚本执行完毕后，关闭终端<br>上面的配置会使终端开机就被打开，如果不喜欢被打扰，可以进行如下设置，终端执行完脚本后后会自动关闭。<br><img src="/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/15438136790326.jpg" alt="image"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2276492-30fae0f1dc7c1bad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>三.脚本执行完毕后，关闭终端<br>上面的配置会使终端开机就被打开，如果不喜欢被打扰，可以进行如下设置，终端执行完脚本后后会自动关闭。<br><img src="https://upload-images.jianshu.io/upload_images/2276492-4da254b59359edd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
 
       
     </div>
