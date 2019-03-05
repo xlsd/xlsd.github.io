@@ -232,6 +232,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/两年总结(一)/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="薛林">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大象席地而坐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/27/两年总结(一)/" itemprop="url">Socket在iOS中的应用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T17:18:47+08:00">
+                2019-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>前言</p>
+</blockquote>
+<p>近期会对项目中的技术点进行整理，项目开发了近两年，已经比较稳定，感谢优品的两年，感谢导师马杰马总，还有调皮的雷总，大家都是好同学。<br>先从<code>Socket</code>在iOS项目中的应用谈起，谈到iOS中的<code>Socket</code>，用的较多的是<code>CocoaAsyncSocket</code>，在此基础上，使用<code>Socket</code>更加便捷。<br><code>Socket</code>通常用在需要服务端给客户端实时发送消息的场景，比如股票的实时行情，比如实时的消息。那早期的聊天消息，实际上是基于UDP的，鉴于早期网路基础设施不发达，每秒几kb的速度，UDP的传输效率更高，现在的聊天，比如微信，QQ也都是基于TCP了，<code>Socket</code>又是TCP的媒介。顺便提一下，当前的聊天软件的语音聊天和视频聊天是基于<code>RTP（Real-time Transport Protocol, 传递音频和视频的标准数据包格式）</code>的，通常会是<code>RTP</code>和<code>RTP</code>的控制协议<code>RTCP</code>协作。<br>下面是一个简单的基于<code>CocoaAsyncSocket</code>的<code>Socket</code>链接Demo：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">"TestSocketService.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;GCDAsyncSocket.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">TestSocketService</span> ()&lt;<span class="title">GCDAsyncSocketDelegate</span>&gt;</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) GCDAsyncSocket *socket;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span> *clientSockets;<span class="comment">// 保存客户端的sockets</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">dispatch_queue_t</span> queue;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">TestSocketService</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)init &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">        _queue = dispatch_queue_create(<span class="string">"sd_socket_test_queue"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">        <span class="keyword">void</span> *nonNullUnusedPointer = (__bridge <span class="keyword">void</span> *) <span class="keyword">self</span>;</span><br><span class="line">        <span class="comment">// 给队列指定标识</span></span><br><span class="line">        dispatch_queue_set_specific(_queue, &amp;IsOnSocketWorkQueueKey, nonNullUnusedPointer, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSMutableArray</span> *)clientSockets &#123;</span><br><span class="line">    <span class="keyword">if</span> (!_clientSockets) &#123;</span><br><span class="line">        _clientSockets = @[].mutableCopy;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _clientSockets;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)start &#123;</span><br><span class="line">    <span class="comment">// 创建socket对象</span></span><br><span class="line">    GCDAsyncSocket *socket = [[GCDAsyncSocket alloc] initWithDelegate:<span class="keyword">self</span> delegateQueue:_queue];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 绑定端口</span></span><br><span class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</span><br><span class="line">    [socket acceptOnPort:<span class="number">5288</span> error:&amp;error];</span><br><span class="line">    <span class="comment">// 开启服务</span></span><br><span class="line">    <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"开启成功"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"开启失败"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">self</span>.socket = socket;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  MARK: - GCDAsyncDelegate</span></span><br><span class="line"><span class="comment">// 接收到客户端数据</span></span><br><span class="line">- (<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didReadData:(<span class="built_in">NSData</span> *)data withTag:(<span class="keyword">long</span>)tag &#123;</span><br><span class="line">    <span class="comment">// 接收到用户数据</span></span><br><span class="line">    <span class="built_in">NSString</span> *str = [[<span class="built_in">NSString</span> alloc] initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSInteger</span> code = [str integerValue];</span><br><span class="line">    <span class="built_in">NSString</span> *responseString = <span class="literal">nil</span>;</span><br><span class="line">    <span class="comment">//.... </span></span><br><span class="line">    [sock writeData:[responseString dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>] withTimeout:time tag:tag];</span><br><span class="line">    <span class="keyword">if</span> (code == <span class="number">0</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span>.clientSockets removeObject:sock];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// CocoaAsyncSocket每次读取完成后必须调用一次监听数据方法</span></span><br><span class="line">    [sock readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stop &#123;</span><br><span class="line">    dispatch_block_t block = ^&#123;</span><br><span class="line">        [<span class="keyword">self</span> disconnect];</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dispatch_get_specific(IsOnSocketWorkQueueKey)) &#123;</span><br><span class="line">        block();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">dispatch_sync</span>(workQueue, block);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#####使用Socket可能遇到的问题:<br>1.粘包或窜包<br>2.多线程操作导致Socket的连接异常</p>
+<p>先说第一种导致粘包或窜包的原因：<br>TCP是基于Socket的通信的，TCP是一种流式传输协议（stream protocol）。这就意味着数据是以字节流的形式传递给接收者的，没有固有的”报文”或”报文边界”的概念。从这方面来说，读取TCP数据就像从串行端口读取数据一样，无法预先得知在一次指定的读调用中会返回多少字节（也就是说能知道总共要读多少，但是不知道具体某一次读多少）。<br>如以下场景：</p>
+<ul>
+<li>从A主机向B主机推送两条消息D1和D2<br><img src="/2019/02/27/两年总结(一)/两年总结/1.png" alt="image"></li>
+<li>理想的传输是<br><img src="/2019/02/27/两年总结(一)/两年总结/2.png" alt="image"></li>
+<li>实际的传输过程可能是<br><img src="/2019/02/27/两年总结(一)/两年总结/3.png" alt="image"></li>
+</ul>
+<p>这就可能造成粘包或窜包。<br>一般针对粘包的分包（或称拆包）的方法是：给每个数据包添加头部，头部中包含数据包的长度，这样接收到数据后，通过读取头部的长度字段，便知道每一个数据包的实际长度了，再根据长度去读取指定长度的数据便能获取到正确的数据了。<br>完整的数据包 = 服务号 + 数据长度 + 数据<br>数据包头 = ld(4B) + length(4B) 共占用8个字节<br>数据包 = length(假设100个字节)<br>所以这条消息的长度是108字节，要先知道一条数据的边界，只要知道了数据的length字段即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 服务号	+	数据包长度		 + 	数据包内容</span><br><span class="line"> 	 1    |  DataLength  |       Data</span><br><span class="line">(4bytes) |	 (4bytes)   |    (100bytes)</span><br></pre></td></tr></table></figure>
+<p>实现代码（来自网络）</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)socket:(UPTAFGCDAsyncSocket *)sock didReadData:(<span class="built_in">NSData</span> *)data withTag:(<span class="keyword">long</span>)tag &#123;</span><br><span class="line">    <span class="comment">//将接收到的数据保存到缓存数据中</span></span><br><span class="line">    [<span class="keyword">self</span>.cacheData appendData:data];;</span><br><span class="line">    <span class="comment">// 取出4-8位保存的数据长度，计算数据包长度</span></span><br><span class="line">    <span class="built_in">NSData</span> *dataLength = [_cacheData subdataWithRange:<span class="built_in">NSMakeRange</span>(<span class="number">4</span>, <span class="number">4</span>)];</span><br><span class="line">    <span class="keyword">int</span> dataLenInt = <span class="built_in">CFSwapInt32BigToHost</span>(*(<span class="keyword">int</span>*)([dataLength bytes]));</span><br><span class="line">    <span class="built_in">NSInteger</span> lengthInteger = <span class="number">0</span>;</span><br><span class="line">    lengthInteger = (<span class="built_in">NSInteger</span>)dataLenInt;</span><br><span class="line">    <span class="built_in">NSInteger</span> complateDataLength = lengthInteger + <span class="number">8</span>;<span class="comment">//算出一个包完整的长度(内容长度＋头长度)</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"data = %ld  ----   length = %d  "</span>,data.length,dataLenInt);</span><br><span class="line">    <span class="comment">//因为服务号和长度字节占8位，所以大于8才是一个正确的数据包</span></span><br><span class="line">    <span class="keyword">while</span> (_cacheData.length &gt; <span class="number">8</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (_cacheData.length &lt; complateDataLength) &#123; <span class="comment">//如果缓存中的数据长度小于包头长度 则继续拼接</span></span><br><span class="line">            [[SingletonSocket sharedInstance].socket readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];<span class="comment">//socket读取数据</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//截取完整数据包</span></span><br><span class="line">           <span class="built_in">NSData</span> *dataOne = [_cacheData subdataWithRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, complateDataLength)];</span><br><span class="line">            [<span class="keyword">self</span> handleTcpResponseData:dataOne];<span class="comment">//处理包数据</span></span><br><span class="line">            [_cacheData replaceBytesInRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, complateDataLength) withBytes:<span class="literal">nil</span> length:<span class="number">0</span>];</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (_cacheData.length &gt; <span class="number">8</span>) &#123;</span><br><span class="line">                [<span class="keyword">self</span> didReadData:<span class="literal">nil</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以通过socket的tag来区分数据的包头和包体，包头中包含服务号及数据长度。<br>如</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (tag == <span class="number">0</span>	) &#123;		<span class="comment">// 标识数据包的头</span></span><br><span class="line">	<span class="comment">// 读取数据流中的数据长度如</span></span><br><span class="line">	Byte lengthData[UNI_PACKET_HEAD_SIZE];</span><br><span class="line"> 	[data getBytes:&amp;lengthData length:UNI_PACKET_HEAD_SIZE];</span><br><span class="line">	<span class="built_in">UInt32</span> length = ((lengthData[<span class="number">0</span>] &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">24</span>) | ((lengthData[<span class="number">1</span>] &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">16</span>) | ((lengthData[<span class="number">2</span>] &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">8</span>) | (lengthData[<span class="number">3</span>] &amp; <span class="number">0xff</span>);</span><br><span class="line">	</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (tag == <span class="number">1</span>)&#123; 	<span class="comment">// 标识数据包的体</span></span><br><span class="line">	<span class="built_in">NSMutableData</span> *contentData = [<span class="built_in">NSMutableData</span> dataWithData:_tempLengthData];</span><br><span class="line">	[contentData appendData:data];</span><br><span class="line">  	<span class="comment">// 数据解析</span></span><br><span class="line">  [<span class="keyword">self</span> parseData:[contentData <span class="keyword">copy</span>]];</span><br><span class="line">  [sock readDataToLength:UNI_PACKET_HEAD_SIZE withTimeout:kUPMarketSocketReadTimeOut tag:kUPMarketSocketLengthTag];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.为了减少多线程操作导致Socket的解包连接等问题，一种巧妙的解决方法是，将其他线程对应的队列任务同步到当前socket的队列中，如断开socket的操作：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)stop &#123;</span><br><span class="line">    dispatch_block_t block = ^&#123;</span><br><span class="line">        [<span class="keyword">self</span> disconnect];</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> (dispatch_get_specific(IsOnSocketWorkQueueKey)) &#123;</span><br><span class="line">        block();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">dispatch_sync</span>(workQueue, block);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#####衍生问题：<br>1.当客户端和服务端建立长连接后，是怎么保持长连接的？<br>2.客户端和服务端由于某种原因断开了，怎么处理？<br>3.空包大小？丢包问题？</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/20/成绩/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -325,7 +487,7 @@
       
         
           
-            <p>考研成绩出来了，查完成绩，我知道，我试图改变人生轨迹的一次机会，泡汤了。<br>最让我出乎意料的是政治，基本没怎么复习，只做了四套肖秀荣的卷子，竟然考了62分。英语一我其实知道，阅读做的是不错的，只是作文写的很烂，我一度怀疑，作文可能连初中生的水平都不如，59分，也算过得去，如果背几篇作文，可能又可以提高至少6到8分了，专业课太差了，拉低了整体分数。<br>颓废了一周多了，什么都不愿意想，又重新下载了王者荣耀，几乎通宵彻夜的玩，今天，我又卸载了它，嗯等下次失落之前，就不再玩了。<br>我到底应该用什么方式再改变我的声明轨迹呢？我想远离许多地方，越来越不会和人聊天，越来越不愿与人说话，我这是怎么了。<br>技术迭代速度之快，让我有些彷徨，不知道某一天，因为年龄就再也做不了我喜欢的职业了，这是2019年的第一篇博客，以考研失败、繁杂的人事、琐碎的家事开场，但依旧希望2019年，我可以再往上走一走，到别的地方走一走。<br>武汉这些天一直就和我的心情一样，不是在下雨就是雾蒙蒙的，终日见不到太阳。</p>
+            <p>考研成绩出来了，查完成绩，我知道，我试图改变人生轨迹的一次机会，泡汤了。<br>最让我出乎意料的是政治，基本没怎么复习，只做了四套肖秀荣的卷子，竟然考了62分。英语一我其实知道，阅读做的是不错的，只是作文写的很烂，我一度怀疑，作文可能连初中生的水平都不如，59分，也算过得去，如果背几篇作文，可能又可以提高至少6到8分了，专业课太差了，拉低了整体分数。<br>颓废了一周多了，什么都不愿意想，又重新下载了王者荣耀，几乎通宵彻夜的玩，今天，我又卸载了它，嗯等下次失落之前，就不再玩了。<br>我到底应该用什么方式再改变我的生命轨迹呢？我想远离许多地方，越来越不会和人聊天，越来越不愿与人说话，我这是怎么了。<br>技术迭代速度之快，让我有些彷徨，不知道某一天，因为年龄就再也做不了我喜欢的职业了，这是2019年的第一篇博客，以考研失败、繁杂的人事、琐碎的家事开场，但依旧希望2019年，我可以再往上走一走，到别的地方走一走。<br>武汉这些天一直就和我的心情一样，不是在下雨就是雾蒙蒙的，终日见不到太阳。</p>
 <p><img src="/2019/02/20/成绩/IMG_3578.jpg" alt="image"></p>
 
           
@@ -1567,7 +1729,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
