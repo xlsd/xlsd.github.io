@@ -232,10 +232,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/06/设计模式在倍牛工程中的应用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="asone">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大象席地而坐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/06/设计模式在倍牛工程中的应用/" itemprop="url">设计模式在倍牛工程中的应用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T11:49:08+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+前言
+
+脱离了代码谈设计模式，就像是脱离了业务谈架构一样。很多时候，觉得别人代码写的好，是离不开合理的运用设计模式的，本篇就重点用代码讲述，倍牛工程中用到的设计模式，文中关于设计模式的定义来自《大话设计模式》一书。从最常用的工厂模式说起：
+
+工厂模式
+
+工厂模式是我们最常用的实例化对象模式，是用工厂方法代替new操作的一种模式。
+在倍牛工程中，用到的UPHKEmpty类，在该类的.h中如下：
+123456789101112131415161718192021222324/* * 默认没有数据 占位view * */+ (instancetype)defaultEmptyView;/* * 转菊花样式 占位view * */+ (instancetype)progressEmptyView;/* * 网络异常 占位view * */+ (instancetype)netErrorEmptyViewWithHandler:(UPHKEmptyViewHandler)handler;/** *  通用的无网络的"雷达"空白页 点击可从新加载 */+ (instancetype)reconn
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/06/设计模式在倍牛工程中的应用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/Socket/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -325,37 +482,19 @@
       
         
           
-            <blockquote>
-<p>前言</p>
-</blockquote>
-<p>近期会对项目中的技术点进行整理，项目开发了近两年，已经比较稳定，感谢优品的两年，感谢导师马杰马总，还有调皮的雷总，大家都是好同学。<br>先从<code>Socket</code>在iOS项目中的应用谈起，谈到iOS中的<code>Socket</code>，用的较多的是<code>CocoaAsyncSocket</code>，在此基础上，使用<code>Socket</code>更加便捷。<br><code>Socket</code>通常用在需要服务端给客户端实时发送消息的场景，比如股票的实时行情，比如实时的消息。那早期的聊天消息，实际上是基于UDP的，鉴于早期网路基础设施不发达，每秒几kb的速度，UDP的传输效率更高，现在的聊天，比如微信是基于TCP，QQ基于UDP及腾讯的私有协议（就是基于WebScoket或者Scoket原生进行封装的一个聊天协议），<code>Socket</code>又是TCP的媒介。顺便提一下，当前的聊天软件的语音聊天和视频聊天是基于<code>RTP（Real-time Transport Protocol, 传递音频和视频的标准数据包格式）</code>的，通常会是<code>RTP</code>和<code>RTP</code>的控制协议<code>RTCP</code>协作。<br>下面是一个简单的基于<code>CocoaAsyncSocket</code>的<code>Socket</code>链接Demo：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">"TestSocketService.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;GCDAsyncSocket.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">TestSocketService</span> ()&lt;<span class="title">GCDAsyncSocketDelegate</span>&gt;</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) GCDAsyncSocket *socket;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span> *clientSockets;<span class="comment">// 保存客户端的sockets</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">dispatch_queue_t</span> queue;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">TestSocketService</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)init &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">        _queue = dispatch_queue_create(<span class="string">"sd_socket_test_queue"</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">        <span class="keyword">void</span> *nonNullUnusedPointer = (__bridge <span class="keyword">void</span> *) <span class="keyword">self</span>;</span><br><span class="line">        <span class="comment">// 给队列指定标识</span></span><br><span class="line">        dispatch_queue_set_specific(_queue, &amp;IsOnSocketWorkQueueKey, nonNullUnusedPointer, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSMutableArray</span> *)clientSockets &#123;</span><br><span class="line">    <span class="keyword">if</span> (!_clientSockets) &#123;</span><br><span class="line">        _clientSockets = @[].mutableCopy;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _clientSockets;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)start &#123;</span><br><span class="line">    <span class="comment">// 创建socket对象</span></span><br><span class="line">    GCDAsyncSocket *socket = [[GCDAsyncSocket alloc] initWithDelegate:<span class="keyword">self</span> delegateQueue:_queue];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 绑定端口</span></span><br><span class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</span><br><span class="line">    [socket acceptOnPort:<span class="number">5288</span> error:&amp;error];</span><br><span class="line">    <span class="comment">// 开启服务</span></span><br><span class="line">    <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"开启成功"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"开启失败"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">self</span>.socket = socket;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  MARK: - GCDAsyncDelegate</span></span><br><span class="line"><span class="comment">// 接收到客户端数据</span></span><br><span class="line">- (<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didReadData:(<span class="built_in">NSData</span> *)data withTag:(<span class="keyword">long</span>)tag &#123;</span><br><span class="line">    <span class="comment">// 接收到用户数据</span></span><br><span class="line">    <span class="built_in">NSString</span> *str = [[<span class="built_in">NSString</span> alloc] initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSInteger</span> code = [str integerValue];</span><br><span class="line">    <span class="built_in">NSString</span> *responseString = <span class="literal">nil</span>;</span><br><span class="line">    <span class="comment">//.... </span></span><br><span class="line">    [sock writeData:[responseString dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>] withTimeout:time tag:tag];</span><br><span class="line">    <span class="keyword">if</span> (code == <span class="number">0</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span>.clientSockets removeObject:sock];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// CocoaAsyncSocket每次读取完成后必须调用一次监听数据方法</span></span><br><span class="line">    [sock readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stop &#123;</span><br><span class="line">    dispatch_block_t block = ^&#123;</span><br><span class="line">        [<span class="keyword">self</span> disconnect];</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dispatch_get_specific(IsOnSocketWorkQueueKey)) &#123;</span><br><span class="line">        block();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">dispatch_sync</span>(workQueue, block);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>使用Socket可能遇到的问题:</p>
-</blockquote>
-<p>1.粘包或窜包<br>2.多线程操作导致Socket的连接异常</p>
-<p>先说第一种导致粘包或窜包的原因：<br>TCP是基于Socket的通信的，TCP是一种流式传输协议（stream protocol）。这就意味着数据是以字节流的形式传递给接收者的，没有固有的”报文”或”报文边界”的概念。从这方面来说，读取TCP数据就像从串行端口读取数据一样，无法预先得知在一次指定的读调用中会返回多少字节（也就是说能知道总共要读多少，但是不知道具体某一次读多少）。<br>如以下场景：</p>
-<ul>
-<li>从A主机向B主机推送两条消息D1和D2<br><img src="https://upload-images.jianshu.io/upload_images/2276492-4a96f4dded654a27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></li>
-<li>理想的传输是<br><img src="https://upload-images.jianshu.io/upload_images/2276492-928b5227933d20f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></li>
-<li>实际的传输过程可能是<br><img src="https://upload-images.jianshu.io/upload_images/2276492-fa0f7c2fc68c87c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></li>
-</ul>
-<p>这就可能造成粘包或窜包。<br>一般针对粘包的分包（或称拆包）的方法是：给每个数据包添加头部，头部中包含数据包的长度，这样接收到数据后，通过读取头部的长度字段，便知道每一个数据包的实际长度了，再根据长度去读取指定长度的数据便能获取到正确的数据了。<br>完整的数据包 = 服务号 + 数据长度 + 数据<br>数据包头 = ld(4B) + length(4B) 共占用8个字节<br>数据包 = length(假设100个字节)<br>所以这条消息的长度是108字节，要先知道一条数据的边界，只要知道了数据的length字段即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 服务号	+	数据包长度		 + 	数据包内容</span><br><span class="line"> 	 1    |  DataLength  |       Data</span><br><span class="line">(4bytes) |	 (4bytes)   |    (100bytes)</span><br></pre></td></tr></table></figure>
-<p>实现代码（来自网络）</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didReadData:(<span class="built_in">NSData</span> *)data withTag:(<span class="keyword">long</span>)tag &#123;</span><br><span class="line">    <span class="comment">//将接收到的数据保存到缓存数据中</span></span><br><span class="line">    [<span class="keyword">self</span>.cacheData appendData:data];;</span><br><span class="line">    <span class="comment">// 取出4-8位保存的数据长度，计算数据包长度</span></span><br><span class="line">    <span class="built_in">NSData</span> *dataLength = [_cacheData subdataWithRange:<span class="built_in">NSMakeRange</span>(<span class="number">4</span>, <span class="number">4</span>)];</span><br><span class="line">    <span class="keyword">int</span> dataLenInt = <span class="built_in">CFSwapInt32BigToHost</span>(*(<span class="keyword">int</span>*)([dataLength bytes]));</span><br><span class="line">    <span class="built_in">NSInteger</span> lengthInteger = <span class="number">0</span>;</span><br><span class="line">    lengthInteger = (<span class="built_in">NSInteger</span>)dataLenInt;</span><br><span class="line">    <span class="built_in">NSInteger</span> complateDataLength = lengthInteger + <span class="number">8</span>;<span class="comment">//算出一个包完整的长度(内容长度＋头长度)</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"data = %ld  ----   length = %d  "</span>,data.length,dataLenInt);</span><br><span class="line">    <span class="comment">//因为服务号和长度字节占8位，所以大于8才是一个正确的数据包</span></span><br><span class="line">    <span class="keyword">while</span> (_cacheData.length &gt; <span class="number">8</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (_cacheData.length &lt; complateDataLength) &#123; <span class="comment">//如果缓存中的数据长度小于包头长度 则继续拼接</span></span><br><span class="line">            [[SingletonSocket sharedInstance].socket readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];<span class="comment">//socket读取数据</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//截取完整数据包</span></span><br><span class="line">           <span class="built_in">NSData</span> *dataOne = [_cacheData subdataWithRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, complateDataLength)];</span><br><span class="line">            [<span class="keyword">self</span> handleTcpResponseData:dataOne];<span class="comment">//处理包数据</span></span><br><span class="line">            [_cacheData replaceBytesInRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, complateDataLength) withBytes:<span class="literal">nil</span> length:<span class="number">0</span>];</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (_cacheData.length &gt; <span class="number">8</span>) &#123;</span><br><span class="line">                [<span class="keyword">self</span> didReadData:<span class="literal">nil</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以通过socket的tag来区分数据的包头和包体，包头中包含服务号及数据长度。<br>如</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (tag == <span class="number">0</span>	) &#123;		<span class="comment">// 标识数据包的头</span></span><br><span class="line">	<span class="comment">// 读取数据流中的数据长度如</span></span><br><span class="line">	Byte lengthData[UNI_PACKET_HEAD_SIZE];</span><br><span class="line"> 	[data getBytes:&amp;lengthData length:UNI_PACKET_HEAD_SIZE];</span><br><span class="line">	<span class="built_in">UInt32</span> length = ((lengthData[<span class="number">0</span>] &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">24</span>) | ((lengthData[<span class="number">1</span>] &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">16</span>) | ((lengthData[<span class="number">2</span>] &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">8</span>) | (lengthData[<span class="number">3</span>] &amp; <span class="number">0xff</span>);</span><br><span class="line">	</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (tag == <span class="number">1</span>)&#123; 	<span class="comment">// 标识数据包的体</span></span><br><span class="line">	<span class="built_in">NSMutableData</span> *contentData = [<span class="built_in">NSMutableData</span> dataWithData:_tempLengthData];</span><br><span class="line">	[contentData appendData:data];</span><br><span class="line">  	<span class="comment">// 数据解析</span></span><br><span class="line">  [<span class="keyword">self</span> parseData:[contentData <span class="keyword">copy</span>]];</span><br><span class="line">  [sock readDataToLength:UNI_PACKET_HEAD_SIZE withTimeout:kUPMarketSocketReadTimeOut tag:kUPMarketSocketLengthTag];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.为了减少多线程操作导致Socket的解包连接等问题，一种安全的解决方法是，将其他线程对应的队列任务同步到当前socket的队列中，如断开socket的操作,我们定义了一个Block，所有的连接操作都被包裹在这个Block中。我们做了如下判断:</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)stop &#123;</span><br><span class="line">    dispatch_block_t block = ^&#123;</span><br><span class="line">        [<span class="keyword">self</span> disconnect];</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> (dispatch_get_specific(IsOnSocketWorkQueueKey)) &#123;</span><br><span class="line">        block();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">dispatch_sync</span>(workQueue, block);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>保证这个连接操作一定是在我们的socketQueue中，而且还是以串行同步的形式去执行，规避了线程安全的问题。</p>
-<blockquote>
-<p>衍生问题：</p>
-</blockquote>
-<p>1.当客户端和服务端建立长连接后，是怎么保持长连接的？发包延迟怎么解决？心跳机制及Qos机制<br>2.客户端和服务端由于某种原因断开了，怎么处理？重练机制设计问题</p>
-<p>   其实，要判定掉线，只需要send或者recive一下，如果结果为零，则为掉线。但是，在长连接下，有可能很长一段时间都没有数据往来。理论上说，这个连接是一直保持连接的，但是实际情况中，如果中间节点出现什么故障是难以知道的。更要命的是，有的节点（防火墙）会自动把一定时间之内没有数据交互的连接给断掉。在这个时候，就需要我们的心跳包了，用于维持长连接，保活。<br>   断线重连，可能有些重连次数的设计等等……<br>   QoS连接效率问题，客户端能做的其实并不多，多试服务端发生阻塞等造成的。</p>
-
           
+前言
+
+近期会对项目中的技术点进行整理，项目开发了近两年，已经比较稳定，感谢优品的两年，感谢导师马杰马总，还有调皮的雷总，大家都是好同学。先从Socket在iOS项目中的应用谈起，谈到iOS中的Socket，用的较多的是CocoaAsyncSocket，在此基础上，使用Socket更加便捷。Socket通常用在需要服务端给客户端实时发送消息的场景，比如股票的实时行情，比如实时的消息。那早期的聊天消息，实际上是基于UDP的，鉴于早期网路基础设施不发达，每秒几kb的速度，UDP的传输效率更高，现在的聊天，比如微信是基于TCP，QQ基于UDP及腾讯的私有协议（就是基于WebScoket或者Scoket原生进行封装的一个聊天协议），Socket又是TCP的媒介。顺便提一下，当前的聊天软件的语音聊天和视频聊天是基于RTP（Real-time Transport Protocol, 传递音频和视频的标准数据包格式）的，通常会是RTP和RTP的控制协议RTCP协作。下面是一个简单的基于CocoaAsyncSocket的Socket链接Demo：
+12345678910111213141516171
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/27/Socket/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -405,7 +544,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/20/成绩/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -495,10 +634,17 @@
       
         
           
-            <p>考研成绩出来了，查完成绩，我知道，我试图改变人生轨迹的一次机会，泡汤了。<br>最让我出乎意料的是政治，基本没怎么复习，只做了四套肖秀荣的卷子，竟然考了62分。英语一我其实知道，阅读做的是不错的，只是作文写的很烂，我一度怀疑，作文可能连初中生的水平都不如，59分，也算过得去，如果背几篇作文，可能又可以提高至少6到8分了，专业课太差了，拉低了整体分数。<br>颓废了一周多了，什么都不愿意想，又重新下载了王者荣耀，几乎通宵彻夜的玩，今天，我又卸载了它，嗯等下次失落之前，就不再玩了。<br>我到底应该用什么方式再改变我的生命轨迹呢？我想远离许多地方，越来越不会和人聊天，越来越不愿与人说话，我这是怎么了。<br>技术迭代速度之快，让我有些彷徨，不知道某一天，因为年龄就再也做不了我喜欢的职业了，这是2019年的第一篇博客，以考研失败、繁杂的人事、琐碎的家事开场，但依旧希望2019年，我可以再往上走一走，到别的地方走一走。<br>武汉这些天一直就和我的心情一样，不是在下雨就是雾蒙蒙的，终日见不到太阳。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-a8ded0938b2151b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+          考研成绩出来了，查完成绩，我知道，我试图改变人生轨迹的一次机会，泡汤了。最让我出乎意料的是政治，基本没怎么复习，只做了四套肖秀荣的卷子，竟然考了62分。英语一我其实知道，阅读做的是不错的，只是作文写的很烂，我一度怀疑，作文可能连初中生的水平都不如，59分，也算过得去，如果背几篇作文，可能又可以提高至少6到8分了，专业课太差了，拉低了整体分数。颓废了一周多了，什么都不愿意想，又重新下载了王者荣耀，几乎通宵彻夜的玩，今天，我又卸载了它，嗯等下次失落之前，就不再玩了。我到底应该用什么方式再改变我的生命轨迹呢？我想远离许多地方，越来越不会和人聊天，越来越不愿与人说话，我这是怎么了。技术迭代速度之快，让我有些彷徨，不知道某一天，因为年龄就再也做不了我喜欢的职业了，这是2019年的第一篇博客，以考研失败、繁杂的人事、琐碎的家事开场，但依旧希望2019年，我可以再往上走一走，到别的地方走一走。武汉这些天一直就和我的心情一样，不是在下雨就是雾蒙蒙的，终日见不到太阳。
+
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/20/成绩/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -548,7 +694,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/故宫/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -638,9 +784,15 @@
       
         
           
-            <p>我是第一次正式的来北京，北京很大，也很美。雾霾只是整个冬天中的偶尔几天而已，被全国人民夸大的厉害，尤其是给了那些没有来过北京的人一些话痨而已。北京是典型的北方城市，我喜欢北方，自来熟和热情是北方人骨子里的，北京比武汉又冷又干，但我喜欢。<br>北京确实是有韵味的城市，作为许多朝代的都城，赋予了它独特的文化内涵，许多场所比如路口、商店、景点的名字都起的很用心。故宫比我想的要大，大很多，以至于5个小时都没能逛完。故就是旧、过去的意思，故宫就是过去的宫殿，很好，如果能上到城楼上俯瞰整个紫禁城那感觉应该会更好。<br><img src="https://upload-images.jianshu.io/upload_images/2276492-c740fabb08bf8eb2.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br><img src="https://upload-images.jianshu.io/upload_images/2276492-e136668c5eb1e93b.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br>今天也正好是2018年的最后一天，我的便签又将迎来一个新的数字了，2019。<br>我其实是可以快乐的生活、学习，但是我也不能不管不顾家人吧，我都不敢回家了，一打电话，一回家，除了催我结婚，好像就没有什么好聊的，不说这些了。<br>我在故宫又看到了万仟堂的茶具，碗碟，等闲暇了，一定要买一套万仟堂的茶具，就在城墙边上随便哪一棵老柳下，支一个茶摊，等一个相谈甚欢的人。<br>2018年总得需要一个总结，做了什么，没做什么，有什么遗憾，总得给自己一个交代，也得谈谈2019年我是怎么想的。<br>2018年我做的重大的一件大事或者一个决定是准备了研究生考试，可能大几率是考不上的，在职准备研究生考试真的很累，有段日子，感觉都快挂了。最后一个月几乎要放弃了考试，但还是参加了。我坚信，敢改变现状，是出于对自己的不满，我不甘心只写程序，所以我要继续往前，与其把希望寄托给孩子，不如自己上（许多家长的传统教育比如我的父母辈都是这样的观念，但这并不代表所有人，我相信位高权重或者腰缠万贯的人更喜欢淡淡的说:”我只希望我的孩子能快快乐乐的成长。”）。考虑到意义和生命的价值层次，以及个人的命运和历史的潮流相统一的规律，所以，我一定能顺势而为。<br>2019年我更期待以下几点，收入可以多元、有自己的知识产权、可以就读名校等。<br>就先写这么多。</p>
-
-          
+          我是第一次正式的来北京，北京很大，也很美。雾霾只是整个冬天中的偶尔几天而已，被全国人民夸大的厉害，尤其是给了那些没有来过北京的人一些话痨而已。北京是典型的北方城市，我喜欢北方，自来熟和热情是北方人骨子里的，北京比武汉又冷又干，但我喜欢。北京确实是有韵味的城市，作为许多朝代的都城，赋予了它独特的文化内涵，许多场所比如路口、商店、景点的名字都起的很用心。故宫比我想的要大，大很多，以至于5个小时都没能逛完。故就是旧、过去的意思，故宫就是过去的宫殿，很好，如果能上到城楼上俯瞰整个紫禁城那感觉应该会更好。今天也正好是2018年的最后一天，我的便签又将迎来一个新的数字了，2019。我其实是可以快乐的生活、学习，但是我也不能不管不顾家人吧，我都不敢回家了，一打电话，一回家，除了催我结婚，好像就没有什么好聊的，不说这些了。我在故宫又看到了万仟堂的茶具，碗碟，等闲暇了，一定要买一套万仟堂的茶具，就在城墙边上随便哪一棵老柳下，支一个茶摊，等一个相谈甚欢的人。2018年总得需要一个总结，做了什么，没做什么，有什么遗憾，总得给自己一个交代，也得谈谈2019年我是怎么想的。2018年我做的重大的一件大事或者一个
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/31/故宫/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -690,7 +842,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/17/嗨-旧时光/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -780,10 +932,15 @@
       
         
           
-            <p>在对政治毫无准备的情况下，也不是一道题也做不对。这大概是生活给我的宽慰吧，反过来想，即使我精心准备了它，或许只会比现在好一点点。<br>没有人能够理解一个忧郁的人，没有人能够了解你自己的人生。在遇到困惑的时候，我曾在梦里、现实里挣扎，苦苦的寻找、思索答案，始终不能得解。但之后的某一天，可能是在午后，在冬日的暖阳下，那片在空中摇曳的树叶，都能解开我的心结。<br>我总能想起她，想起和她在一起的日子。我熟悉武大的许多角落，去过许多次樱顶，在那里停留，在那里思索；也吃遍了梅园、桂圆、星湖园的食堂，星湖园的秋刀鱼是最让人难以忘怀的。整个武汉，我只喜欢武大。我没能有机会去名校读书始终觉的有些可惜，我也并不是没有机会，只是当时年少。<br>对意义的思考，对爱因斯坦等科学家所做的事情有所了解之后，让我更加坚定的把探索未知作为我毕生所追求的目标，而实现这个目标能想到的一种方式就是继续读书深造，才能达到人类某一个知识点的边缘，进而继续探索，也促成了我这次的考研计划。许多人不能理解，在有着不错收入的情况下，为什么要辞掉工作去读书？有这样疑惑的人包括我的父亲和母亲。我不敢跟人讲起，因为这样的人生目标似乎太大了，不知如何解释。<br>今天整理云盘的照片，又想起了许多从前的故事，想起了红房子康琼玛蕃，那些民谣，老猪，王彪，小威……</p>
-<pre><code>距离2019年研究生考试，还有4天。
-</code></pre>
-          
+          在对政治毫无准备的情况下，也不是一道题也做不对。这大概是生活给我的宽慰吧，反过来想，即使我精心准备了它，或许只会比现在好一点点。没有人能够理解一个忧郁的人，没有人能够了解你自己的人生。在遇到困惑的时候，我曾在梦里、现实里挣扎，苦苦的寻找、思索答案，始终不能得解。但之后的某一天，可能是在午后，在冬日的暖阳下，那片在空中摇曳的树叶，都能解开我的心结。我总能想起她，想起和她在一起的日子。我熟悉武大的许多角落，去过许多次樱顶，在那里停留，在那里思索；也吃遍了梅园、桂圆、星湖园的食堂，星湖园的秋刀鱼是最让人难以忘怀的。整个武汉，我只喜欢武大。我没能有机会去名校读书始终觉的有些可惜，我也并不是没有机会，只是当时年少。对意义的思考，对爱因斯坦等科学家所做的事情有所了解之后，让我更加坚定的把探索未知作为我毕生所追求的目标，而实现这个目标能想到的一种方式就是继续读书深造，才能达到人类某一个知识点的边缘，进而继续探索，也促成了我这次的考研计划。许多人不能理解，在有着不错收入的情况下，为什么要辞掉工作去读书？有这样疑惑的人包括我的父亲和母亲。我不敢跟人讲起，因为这样的人生目标似乎太大了，不知如何解释。今天整
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/17/嗨-旧时光/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -833,7 +990,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/05/我始终走不出林芝/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -923,13 +1080,20 @@
       
         
           
-            <blockquote>
-<p>我是个不好的人，性格过于温和，内心过于谦卑。</p>
-</blockquote>
-<p>为什么我总是怀念西藏？可能不单单是因为大学是在那里读的，人都说大学是生命中最美好的时光，没有压力，穷尽一切的去做梦，去想象生命应有的样子。反观现在，工作占据了我百分之九十以上的时间，无论如何有想法，我都要耗在那里，因为我需要钱，我身边的人也需要钱，嗯，可以理解为，现实击碎了我的梦想。我感到沮丧，唯有当我觉的我是在为了有意义的事情而努力的时候，我才能够精神饱满的去做事。对于意义的讨论，已经过了，虽然我清楚自己的意义，但我始终无法摆脱生活的牢笼，生活的故事还是要讲，还是要去做，没有一个人可以不去听，我就是个傻子。你不是个孩子，但是我始终长不大。我不想做的事，也总要去做的，还有不想相处的人，也不能摆脱。我到底是怎么了。希望不要有人能看到我的日记，再也不要。这里就是我的内心，我总是想起和朋友们，周末的时候起很早，可以骑车沿着川藏线的后半段，骑上一天。我总能想起，在去色季拉山的途中，那满目的苍翠和皑皑的雪山，赞叹不完的变化的四季，我喜欢山，喜欢水，唯独不喜欢人。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-468e4651bca07680.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br><img src="https://upload-images.jianshu.io/upload_images/2276492-696a7aa4a0c63445.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br><img src="https://upload-images.jianshu.io/upload_images/2276492-32068cdcd69b93dd.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br><img src="https://upload-images.jianshu.io/upload_images/2276492-bb97318d9f6eddb6.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br><img src="https://upload-images.jianshu.io/upload_images/2276492-0e0a502420202455.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br><img src="https://upload-images.jianshu.io/upload_images/2276492-1cdbc96d3ffe8406.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+          
+我是个不好的人，性格过于温和，内心过于谦卑。
+
+为什么我总是怀念西藏？可能不单单是因为大学是在那里读的，人都说大学是生命中最美好的时光，没有压力，穷尽一切的去做梦，去想象生命应有的样子。反观现在，工作占据了我百分之九十以上的时间，无论如何有想法，我都要耗在那里，因为我需要钱，我身边的人也需要钱，嗯，可以理解为，现实击碎了我的梦想。我感到沮丧，唯有当我觉的我是在为了有意义的事情而努力的时候，我才能够精神饱满的去做事。对于意义的讨论，已经过了，虽然我清楚自己的意义，但我始终无法摆脱生活的牢笼，生活的故事还是要讲，还是要去做，没有一个人可以不去听，我就是个傻子。你不是个孩子，但是我始终长不大。我不想做的事，也总要去做的，还有不想相处的人，也不能摆脱。我到底是怎么了。希望不要有人能看到我的日记，再也不要。这里就是我的内心，我总是想起和朋友们，周末的时候起很早，可以骑车沿着川藏线的后半段，骑上一天。我总能想起，在去色季拉山的途中，那满目的苍翠和皑皑的雪山，赞叹不完的变化的四季，我喜欢山，喜欢水，唯独不喜欢人。
+
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/05/我始终走不出林芝/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -979,7 +1143,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -1069,31 +1233,26 @@
       
         
           
-            <p>加速Xcode编辑及运行速度的方法</p>
-<blockquote>
-<p>给Xcode 开辟专属内存可以加快读取<code>DriverData</code>中的数据，加速Xcode编译和运行速度。使Xcode编译和运行需要从磁盘读写文件，改成在内存中进行（第一次除外）。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 脚本内容</span><br><span class="line">#!/bin/bash</span><br><span class="line">// 设置 ram disk 的名称</span><br><span class="line">RAMDISK=XcodeRAM</span><br><span class="line"></span><br><span class="line">// 设置 ram disk 的大小，这里是 1024 MB</span><br><span class="line">SIZE=1024  </span><br><span class="line"></span><br><span class="line">// 分配给 ramdisk 相应大小的空间</span><br><span class="line">diskutil erasevolume HFS+ $RAMDISK `hdiutil attach -nomount ram://$[SIZE*2048]` </span><br><span class="line"></span><br><span class="line">// 打开元数据索引，如果你使用 Xcode 内部的调试工具这是必须的。因为调试工具使用元数据索引来查询符号连接</span><br><span class="line">mdutil -i on /Volumes/$RAMDISK</span><br></pre></td></tr></table></figure>
-<p>我使用了几天了，感觉确实可以提高不少Xcode运行速度，有兴趣可以配置下。<br>配置如下：</p>
-<ul>
-<li>终端运行上面的脚本文件。</li>
-<li>修改Xcode <code>DriverData</code>路径如下</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-3bbb35b1c585fa3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>注意：由于开辟的专属内存是占用电脑内存的，并不是真正的磁盘分区，所以电脑关机后改磁盘会消失，开机需要重新运行脚本文件重新进行分区。</p>
-<p>配置开机启动<br>一.在MAC程序中找到自动操作（图标是一个小机器人）。<br>搜索shell后</p>
-<ol>
-<li>拖入脚本文件</li>
-<li>双击”运行Shell脚本”</li>
-</ol>
-<p>配置如下：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-c8b06058ff7c6dd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>保存为应用程序。</p>
-<p>二.在开机启动项中加入该应用程序，如</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-30fae0f1dc7c1bad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>三.脚本执行完毕后，关闭终端<br>上面的配置会使终端开机就被打开，如果不喜欢被打扰，可以进行如下设置，终端执行完脚本后后会自动关闭。<br><img src="https://upload-images.jianshu.io/upload_images/2276492-4da254b59359edd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+          加速Xcode编辑及运行速度的方法
 
-          
+给Xcode 开辟专属内存可以加快读取DriverData中的数据，加速Xcode编译和运行速度。使Xcode编译和运行需要从磁盘读写文件，改成在内存中进行（第一次除外）。
+
+12345678910111213// 脚本内容#!/bin/bash// 设置 ram disk 的名称RAMDISK=XcodeRAM// 设置 ram disk 的大小，这里是 1024 MBSIZE=1024  // 分配给 ramdisk 相应大小的空间diskutil erasevolume HFS+ $RAMDISK `hdiutil attach -nomount ram://$[SIZE*2048]` // 打开元数据索引，如果你使用 Xcode 内部的调试工具这是必须的。因为调试工具使用元数据索引来查询符号连接mdutil -i on /Volumes/$RAMDISK
+我使用了几天了，感觉确实可以提高不少Xcode运行速度，有兴趣可以配置下。配置如下：
+
+终端运行上面的脚本文件。
+修改Xcode DriverData路径如下
+
+
+注意：由于开辟的专属内存
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/03/给Xcode配置专属内存加快Xcode编译速度/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1143,7 +1302,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/02/用递归算法实现iOS补位动画/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -1233,31 +1392,28 @@
       
         
           
-            <h4 id="用递归算法实现iOS补位动画"><a href="#用递归算法实现iOS补位动画" class="headerlink" title="用递归算法实现iOS补位动画"></a>用递归算法实现iOS补位动画</h4><blockquote>
-<p>前言</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">写这个动画，主要是为了运用递归算法。</span><br></pre></td></tr></table></figure>
-<p>需求如下:</p>
-<ul>
-<li>点击任一个方块，在它之后的方块都向前移动进行补位。 </li>
-</ul>
-<p>效果如下：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-23263e6a5c2091b5.gif?imageMogr2/auto-orient/strip" alt="demo"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">实现思路：</span><br><span class="line">1.创建的方块数要比展示的方块多一个。</span><br><span class="line">2.将被点击的方块的Frame赋给它之后的方块</span><br><span class="line">3.如果被点击的方块之后的方块之后，还有方块，那就把它之后的方块的Frame再赋给它之后的方块的之后的方块。🙂（这样描述晕不晕？）</span><br><span class="line">4.知道最后一个之后在没有方块。</span><br></pre></td></tr></table></figure>
-<p>示例：<br>点击0号方块，1、2、3号方块会自动向前移位。<br>规律在与步骤2、3。</p>
-<p>动画代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)action:(UIButton *)button &#123;</span><br><span class="line">    button.hidden = YES;</span><br><span class="line">    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^&#123;</span><br><span class="line">        [self changeFrame:button];</span><br><span class="line">        button.alpha = 0;</span><br><span class="line">    &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">        button.frame = self.rightFrames.lastObject.CGRectValue;</span><br><span class="line">        button.hidden = NO;</span><br><span class="line">        [self reloadTagAndFrame:button];</span><br><span class="line">        [UIView animateWithDuration:0.5 animations:^&#123;</span><br><span class="line">            button.alpha = 1;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>动画效果使用的<code>UIView</code>的<code>UIViewAnimationOptionTransitionCrossDissolve</code>。</p>
-<p>核心在于Frame的改变，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)changeFrame:(UIButton *)button &#123;</span><br><span class="line">    [self frameChange:button tag:button.tag];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)frameChange:(UIButton *)button tag:(NSInteger)tag &#123;</span><br><span class="line">    if (tag == 0) &#123;</span><br><span class="line">        tag++;</span><br><span class="line">    &#125;</span><br><span class="line">    self.rightBtns[tag].frame = self.rightFrames[tag - 1].CGRectValue;</span><br><span class="line">    if (tag &lt; 3 &amp;&amp; tag &gt;= 1) &#123;</span><br><span class="line">        tag++;</span><br><span class="line">        [self frameChange:self.rightBtns[tag] tag:tag];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其他逻辑注意：</p>
-<ul>
-<li>当点击的是第一个时，无需将它前一个的<code>Frame</code>赋值给它，开始从第二个修改<code>Frame</code>即可，递归直到修改到最后一个跳出递归即可。</li>
-<li>需要使用两个数组分别保存所创建的方块的<code>Frame</code>值和方块。</li>
-<li>在动画结束之后，把被点击的那个方块的<code>Frame</code>修改为最后一个方块的<code>Frame</code>，同时，被点击的方块在数组中的顺序也需要被移动到最后。</li>
-</ul>
+          用递归算法实现iOS补位动画
+前言
 
-          
+1写这个动画，主要是为了运用递归算法。
+需求如下:
+
+点击任一个方块，在它之后的方块都向前移动进行补位。 
+
+效果如下：
+
+12345实现思路：1.创建的方块数要比展示的方块多一个。2.将被点击的方块的Frame赋给它之后的方块3.如果被点击的方块之后的方块之后，还有方块，那就把它之后的方块的Frame再赋给它之后的方块的之后的方块。🙂（这样描述晕不晕？）4.知道最后一个之后在没有方块。
+示例：点击0号方块，1、2、3号方块会自动向前移位。规律在与步骤2、3。
+动画代码：
+1234567891011121314- (void)action:(UIButton *)button &#123;    button.hidden = YES;    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^&#123;        [self changeFrame:button];        b
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/02/用递归算法实现iOS补位动画/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1307,7 +1463,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/22/一场诗旅/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -1397,12 +1553,19 @@
       
         
           
-            <blockquote>
-<p>关于郭路生</p>
-</blockquote>
-<p>说郭路生可能比较陌生，但是说起食指，大家应该比较熟悉。一首《相信未来》即年少成名。应了那句出名要趁早的说法。<br>    但是时代造就了诗人，诗人也映射了一个时代。有一个巧合，郭路生是山东人，而且与我的家乡菏泽有莫大的关系。他第一次被人说是个疯子，便是在他母亲的家乡菏泽单县。现在公开的简历中从1979年到1990年，是空白的，然而这十年他大多数时间都在菏泽，在教书，从他被人说是疯子，再后来传开了，十里八乡的许多人也都认为他是疯子。只有他内心清楚，他没疯，他只是写诗，思考，矗立，甚至吸烟的姿势都和别人不一样，但人始终是人，他中还是拖垮了，精神分裂使他在1991年住入北京第三福利院。<br>    他和余秀华吵了一架，两个风格不同的诗人并不是谁一定对谁一定错，所处的时代不同，对诗的理解自然同。<br><img src="https://upload-images.jianshu.io/upload_images/2276492-dbb5d1ca4f3030df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+          
+关于郭路生
+
+说郭路生可能比较陌生，但是说起食指，大家应该比较熟悉。一首《相信未来》即年少成名。应了那句出名要趁早的说法。    但是时代造就了诗人，诗人也映射了一个时代。有一个巧合，郭路生是山东人，而且与我的家乡菏泽有莫大的关系。他第一次被人说是个疯子，便是在他母亲的家乡菏泽单县。现在公开的简历中从1979年到1990年，是空白的，然而这十年他大多数时间都在菏泽，在教书，从他被人说是疯子，再后来传开了，十里八乡的许多人也都认为他是疯子。只有他内心清楚，他没疯，他只是写诗，思考，矗立，甚至吸烟的姿势都和别人不一样，但人始终是人，他中还是拖垮了，精神分裂使他在1991年住入北京第三福利院。    他和余秀华吵了一架，两个风格不同的诗人并不是谁一定对谁一定错，所处的时代不同，对诗的理解自然同。
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/22/一场诗旅/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1452,7 +1615,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/21/午后的风吹起来/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="薛林">
+      <meta itemprop="name" content="asone">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.png">
     </span>
@@ -1542,13 +1705,20 @@
       
         
           
-            <blockquote>
-<p>前言 </p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-20c8b56094e5e500.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" align="right"><br>午后的风吹起来<br>就想起林芝的秋了<br>等到深秋的时候<br>希望来一场旅行<br>就沿着这条路<br>一直走</p>
-<p>2018.08.12</p>
+          
+前言 
+
+午后的风吹起来就想起林芝的秋了等到深秋的时候希望来一场旅行就沿着这条路一直走
+2018.08.12
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/21/午后的风吹起来/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1617,9 +1787,9 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="薛林">
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="asone">
             
-              <p class="site-author-name" itemprop="name">薛林</p>
+              <p class="site-author-name" itemprop="name">asone</p>
               <p class="site-description motion-element" itemprop="description">My life is brilliant.</p>
           </div>
 
@@ -1630,7 +1800,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1684,7 +1854,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">薛林</span>
+  <span class="author" itemprop="copyrightHolder">asone</span>
 
   
 </div>

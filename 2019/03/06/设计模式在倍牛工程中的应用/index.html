@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言  脱离了代码谈设计模式，就像是脱离了业务谈架构一样。很多时候，觉得别人代码写的好，是离不开合理的运用设计模式的，本篇就重点用代码讲述，倍牛工程中用到的设计模式，文中关于设计模式的定义来自《大话设计模式》一书。从最常用的工厂模式说起：  工厂模式  工厂模式是我们最常用的实例化对象模式，是用工厂方法代替new操作的一种模式。 在倍牛工程中，用到的UPHKEmpty类，在该类的.h中如下： 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式在倍牛工程中的应用">
+<meta property="og:url" content="http://yoursite.com/2019/03/06/设计模式在倍牛工程中的应用/index.html">
+<meta property="og:site_name" content="大象席地而坐">
+<meta property="og:description" content="前言  脱离了代码谈设计模式，就像是脱离了业务谈架构一样。很多时候，觉得别人代码写的好，是离不开合理的运用设计模式的，本篇就重点用代码讲述，倍牛工程中用到的设计模式，文中关于设计模式的定义来自《大话设计模式》一书。从最常用的工厂模式说起：  工厂模式  工厂模式是我们最常用的实例化对象模式，是用工厂方法代替new操作的一种模式。 在倍牛工程中，用到的UPHKEmpty类，在该类的.h中如下： 1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-57def1c060fe10fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-7cfaa389dd16cb20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/860">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-2f7444ee8b773884.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-42688b6db4ffc203.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-06T04:46:30.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式在倍牛工程中的应用">
+<meta name="twitter:description" content="前言  脱离了代码谈设计模式，就像是脱离了业务谈架构一样。很多时候，觉得别人代码写的好，是离不开合理的运用设计模式的，本篇就重点用代码讲述，倍牛工程中用到的设计模式，文中关于设计模式的定义来自《大话设计模式》一书。从最常用的工厂模式说起：  工厂模式  工厂模式是我们最常用的实例化对象模式，是用工厂方法代替new操作的一种模式。 在倍牛工程中，用到的UPHKEmpty类，在该类的.h中如下： 1">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2276492-57def1c060fe10fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'XueLin'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/06/设计模式在倍牛工程中的应用/">
+
+
+
+
+
+  <title>设计模式在倍牛工程中的应用 | 大象席地而坐</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大象席地而坐</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/06/设计模式在倍牛工程中的应用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="asone">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大象席地而坐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式在倍牛工程中的应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T11:49:08+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>前言</p>
+</blockquote>
+<p>脱离了代码谈设计模式，就像是脱离了业务谈架构一样。很多时候，觉得别人代码写的好，是离不开合理的运用设计模式的，本篇就重点用代码讲述，倍牛工程中用到的设计模式，文中关于设计模式的定义来自《大话设计模式》一书。<br>从最常用的工厂模式说起：</p>
+<blockquote>
+<p>工厂模式</p>
+</blockquote>
+<p>工厂模式是我们最常用的实例化对象模式，是用工厂方法代替new操作的一种模式。</p>
+<p>在倍牛工程中，用到的<code>UPHKEmpty</code>类，在该类的.h中如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 默认没有数据 占位view</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line">+ (<span class="keyword">instancetype</span>)defaultEmptyView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 转菊花样式 占位view</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line">+ (<span class="keyword">instancetype</span>)progressEmptyView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 网络异常 占位view</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line">+ (<span class="keyword">instancetype</span>)netErrorEmptyViewWithHandler:(UPHKEmptyViewHandler)handler;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  通用的无网络的"雷达"空白页 点击可从新加载</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">+ (<span class="keyword">instancetype</span>)reconnectEmptyViewWithHandler:(UPHKEmptyViewHandler)handler;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 自选空白 占位view</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line">+ (<span class="keyword">instancetype</span>)optionalEmptyViewWithHandler:(UPHKEmptyViewHandler)handler;</span><br></pre></td></tr></table></figure>
+<p>工厂方法也可以是如下这个初始化的方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  工厂方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">+ (<span class="keyword">instancetype</span>) modelWithStartPoint:(<span class="built_in">CGPoint</span>)startPoint endPoint:(<span class="built_in">CGPoint</span>)endPoint;</span><br></pre></td></tr></table></figure>
+<p>这样理解起来也并不困难。</p>
+<p>根据不同的场景，使用不同的工厂方法，即可。</p>
+<blockquote>
+<p>单一职责原则</p>
+</blockquote>
+<p>先说个人理解，单一职责原则，我一直理解为，在一个类中，要保证该类的功能是单一的，也就是专一，该类不能既承担A功能，又承担B功能，不然会造成功能耦合，从而导致设计脆弱、扩展性差，此原则的核心就是解耦和增强内聚性。<br>单一职责原则的定义如下：<br>就一个类而言，应该仅有一个引起它发生变化的原因。</p>
+<p>我并不能很好的理解“仅有一个引起它发生变化的原因”这句话。<br>所以在联想到倍牛工程的时候，我觉得，数据库的创建和读取的设计，类<code>UPHKDBHelper</code>和<code>UPHKUserDBManager</code>。<code>UPHKDBHelper</code>是直接操作数据库的类，负责<code>UPHKUserSDK</code>中数据的IO操作，将读取或者需要写入的数据，回调或者写入到数据库中，但是这里的单一职责我就认为它是功能单一，或者唯一，是唯一直接操作数据库的类。<br><code>UPHKDBHelper.h</code>中的代码如下，</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  数据表操作相关</span></span><br><span class="line">- (<span class="keyword">id</span>)initDBWithName:(<span class="built_in">NSString</span> *)dbName;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)initWithDBWithPath:(<span class="built_in">NSString</span> *)dbPath;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">///************************ 数据库存取相关 *****************************************</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)putObject:(<span class="keyword">id</span>)object withId:(<span class="built_in">NSString</span> *)objectId intoTable:(<span class="built_in">NSString</span> *)tableName;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)getObjectById:(<span class="built_in">NSString</span> *)objectId fromTable:(<span class="built_in">NSString</span> *)tableName;</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+<p>其实<code>UPHKDBHepler</code>理解为单一职责原则，我并不认为合理，还需探讨。<br>我认为在倍牛工程中比较符合单一职责设计模式的是<code>UPHKCommDataClient</code>以及与它相似的类。<br>UPHKCommDataClient.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//  下载</span><br><span class="line">- (UPHKResponse *)downloadFile:(NSString *)filePath;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 上传图片到服务器</span><br><span class="line"> */</span><br><span class="line">- (UPHKResponse *)uploadImageFile:(UIImage *)image;</span><br></pre></td></tr></table></figure>
+<p><code>UPHKCommDataClient</code>负责了整个工程的文件下载和图片的上传，职责单一，也不依赖上层逻辑，做到“仅有一个引起它发生变化的原因”，在倍牛工程共还有许多与之相似的类，如<code>UserSDK</code>中负责线程管理的<code>UserServer</code>、负责组包的<code>UserService</code>、负责底层网络请求的<code>UserClient</code>等等都有单一职责的应用。</p>
+<blockquote>
+<p>开放封闭原则</p>
+</blockquote>
+<p>是说软件实体（类、模块、函数等），应该可以扩展，但是不可修改。</p>
+<p>开放封闭原则主要体现在两个方面：对于扩展是开放的，对于更改是封闭的。<br>在倍牛及股票通工程中使用的UPHybridSDK，是严格开放封闭原则进行设计的。<br><img src="https://upload-images.jianshu.io/upload_images/2276492-57def1c060fe10fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>在此之前，我从未想过一个WebView要做这么深层次的封装，也才知道，WebView的功能，可以以插件的形式设计，对HybridSDK结构理解还不够深刻，只是拿来<code>UPHybridPlugin</code>这个类，对开放封闭原则这一设计模式做深入理解用。<br><code>UPHybridPlugin</code>(插件基类)，在实现上只是将事件分发给<code>UPHybridPluginManager</code>。在native需要与web页面交互的时候，<code>execute</code>方法就是web调用终端的<code>onJsRequest</code>时触发的方法，<code>action</code>和<code>args</code>分别是需要终端处理的事件和终端需要的参数。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="built_in">BOOL</span>)execute:(<span class="built_in">NSString</span> *)callbackId action:(<span class="built_in">NSString</span> *)action args:(<span class="built_in">NSDictionary</span> *)args;</span><br></pre></td></tr></table></figure>
+<p>在创建功能插件时，必须继承<code>UPHybridPlugin</code>，并重载<code>execute</code>方法。在UPHybirdSDK的结构设计完成后，父类<code>UPHybridPlugin</code>的<code>execute</code>方法就不再更改，但是无论模块多么的封闭，都会存在一些无法对之封闭的变化，我理解的变化，针对<code>UPHybridPlugin</code>来说，就是不断增加的功能，就需要各式各样的功能插件，功能是随需求不断变化的，既然不可能完全封闭，就必须对设计的模块应该对那种变化封闭做出选择，然后构造抽象来隔离这些变化，<code>execute</code>其实就是这样抽象出来的方法。<br>对UPHybridSDK的可以逐步的理解如下：最初写UPHybird时，假设只有分享功能，就不存在当前插件形式的结构，但是随着拍照功能、页面定制功能的增加，这时候，应该对程序中呈现频繁变化的那部分做出抽象，变化时什么？可以理解为具体的功能代码的实现，但是不变的是什么？是底层<code>Web</code>调用<code>native</code>的结构，这时候需要抽象的部分就形成了，面对新功能，对程序的改动是通过增加新插件（新代码）的形式进行的（可扩展），而不是更改现有的代码（封闭）。</p>
+<blockquote>
+<p>里氏代换原则</p>
+</blockquote>
+<p>子类型必须能够替换掉他们的父类型。<br> 一个软件实体如果使用的是一个父类的话，那么一定适用于其子类，而且它察觉不出父类对象和子类对象的区别。也就是说，在软件里面，把父类都替换成它的子类，程序的行为没有变化。<br>我理解的里氏代换原则，是开放封闭原则的根本，也就是说，正是由于子类型的可替换性才使得使用父类类型的模块在无需修改的情况下就可以扩展。</p>
+<blockquote>
+<p>依赖倒转原则</p>
+</blockquote>
+<p>高层模块不应该依赖于低层模块。两个都应该依赖抽象。抽象不应该依赖细节，细节应该依赖抽象。</p>
+<p>按照UserSDK和User模块的关系，可以理解User是业务逻辑相关的，属于高层模块，UserSDK是低层模块，这样的依赖关系是符合工程模块化设计原理的。<br><img src="https://upload-images.jianshu.io/upload_images/2276492-7cfaa389dd16cb20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/860" alt="image.png"><br>但是我认为把这种设计理解成依赖倒转的原则，有一点不妥。按照依赖倒转原则，高层模块不应该依赖低层模块，两个都应该依赖抽象（有些拗口）。<br>在高层模块中，多处调用了低层模块提供的接口，在要做新项目时，如果需求是不更改App的UI布局，换另一个UserSDK直接提供数据，也就意味着，高层模块的业务逻辑完全可以复用，但高层模块多处调用的低层接口是不是要多处修改？</p>
+<p>所以按照依赖倒转的原则应该是:<br><img src="https://upload-images.jianshu.io/upload_images/2276492-2f7444ee8b773884.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>但实际开发考虑到实际情况，很少这样去设计，也是为了便捷开发，适合自己的才是最好的。</p>
+<blockquote>
+<p>代理模式</p>
+</blockquote>
+<p><del>######为其他对象提供一种代理以控制对这个对象的访问。</del><br><del>在iOS代理模式最常见的实现方式是协议（Protocol），协议定义了接口，无需关心代理是谁，只要遵循并实现协议，就可以访问到这个对象，在倍牛和股票通中的<code>Router</code>是按照代理模式设计的。</del><br><del>以<code>Router</code>跳转个股详情为例</del><br><del>在<code>RouterProtocol</code>中定义协议代码如下：</del></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">UPHKMarketRouterDelegate</span> &lt;<span class="title">NSObject</span>&gt;</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 进入股票行情页面</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> @param code 股票代码</span></span><br><span class="line"><span class="comment"> @param setCode 市场代码</span></span><br><span class="line"><span class="comment"> @param category 市场分类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)goMarketHQWithCode:(<span class="built_in">NSString</span> *)code setCode:(<span class="built_in">NSInteger</span>)setCode category:(UPMarketStockCategory)category;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p><del>在个股详情页遵循并实现该协议</del><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)goMarketHQWithCode:(NSString *)code setCode:(NSInteger)setCode category:(UPMarketStockCategory)category</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><del>那么遵循协议者就是对代理者开放了一种对当前对象的访问权限。</del></p>
+<blockquote>
+<p>迪米特法则</p>
+</blockquote>
+<p>如果两个类不需要彼此直接通信，那么这两个类就不应当发生直接的相互作用。如果其中一个类需要调用另一个类的某一个方法的话，可以通过第三者转发这个调用。</p>
+<p>先说我的理解，在学习迪米特法则这个设计模式之前，我是经常听到大家这么说的，但是并不知道这其实是一种设计模式。按照之前的理解，每一个类在结构设计上，都应当尽量降低成员的访问权限，也就是说，一个类包装好了自己的private状态，不需要让别的类知道的字段或行为就不要公开，它强调类之前的松耦合，这就是该设计模式的根本思想。</p>
+<p>迪米特法则在倍牛中有广泛应用，如<code>UserSDK</code>中的<code>UserServer</code>，在<code>.m</code>将用户数据<code>UserData</code>私有，对外只提供对应的方法，满足条件的情况下会在内部对该属性进行管理，而非将该属性暴露出去，我也认为这一个类，同时满足了几种设计模式。</p>
+<blockquote>
+<p>职责链模式</p>
+</blockquote>
+<p>使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。<img src="https://upload-images.jianshu.io/upload_images/2276492-42688b6db4ffc203.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li><p>职责链的好处<br>①当提交一个请求时，请求沿链传递直至有一个Handler对象负责处理它。<br>②接受者和发送者都没有对方的明确信息，且链中的对象自己也不知道链的结构。结果是职责链可简化对象的相互连接，他们仅需保持一个指向其后继者的引用，而不需要保持它所有候选接受者的引用。降低了耦合度。<br>③随时随地增加或修改一个请求的结构，增强了给对象指派职责的灵活性。</p>
+</li>
+<li><p>职责链的应用<br>在倍牛工程中，并没有非常符合职责链设计模式的代码示例，但是我依然觉的这个设计模式非常有意思。<br>在大话设计模式一书中，作者是用员工、经理、总监、总经理的角色分工来举例说明的。我举一个iOS中的例子，我认为iOS中的响应链是按照职责链模式进行设计的。<br>当用户触摸应用中的一个Button时，触摸生成的<code>Event</code>会沿响应链进行传递，并找到最适合处理事件的对象。<br><code>UIApplication</code> ~&gt; <code>UIWindow</code> ~&gt; <code>UIViewController</code>~~&gt;<code>UIButton</code><br>在查找适合处理事件的对象时，系统会在不同的处理者自动调用<code>pointInside</code>方法，如下</p>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</span><br><span class="line">    [<span class="keyword">super</span> pointInside:point withEvent:event];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当<code>pointInside</code>方法返回YES的时候，会将该视图加入到<code>UIApplication</code>的响应者栈。<br>在iOS中响应者都继承自<code>UIResponder</code>，查找当前响应者的下一个响应者可以通过<code>[self nextResponder]</code>获取，如果当前响应者不处理事件，可以将事件继续传递给父类，父类再进行分发。<br>在响应链中，满足了一个请求可以被多个对象处理，并且每个对象仅需保持一个指向其后继者的引用的条件，所以我认为响应链就是按照职责链设计模式进行设计的。</p>
+<blockquote>
+<p>适配器模式</p>
+</blockquote>
+<p>将一个类的接口转换成需求需要的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。</p>
+<ul>
+<li>应用场景<br>当数据和行为都正确，但接口不符时，我们应该考虑使用适配器，目的是使控制范围之外的一个原有对象和某个接口匹配。适配模式主要应用于希望复用一些现存的类，但是接口又与复用环境要求不一致的情况。</li>
+<li>理解<br>在看安卓代码的时候，会发现有各式各样的<code>Adapter</code>，如下：</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">class</span> MarketAmountListAdapter extends MarketBaseRecyclerAdapter &#123;</span><br><span class="line"></span><br><span class="line">    private final Context mContext;</span><br><span class="line">    private final ArrayList&lt;UPMarketData&gt; mDataList;</span><br><span class="line"></span><br><span class="line">    public MarketAmountListAdapter(Context context) &#123;</span><br><span class="line">        mContext = context;</span><br><span class="line">        mDataList = new ArrayList&lt;&gt;();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>但是在iOS中，很少看到专门的<code>Adapter</code>，但并不代表没有，多数时候数据的适配或处理是在数据模型中完成的，所以并不需要创建单独的<code>Adapter</code>。<br>网络请求回来的数据模型如<code>UPHqStockHq</code>和UI控件需要显示的数据往往有些差别，如类型不匹配、字体颜色未知等，这时候就需要对改模型进行适配<code>.h</code></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UPHKMarketHSGTAHStockModel</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) UPMarketAHStockData *ahStock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIImage</span> *marketFlagImage;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *aChangeRadio;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Color</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span> *aNowPriceColor;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span> *aChangeRadioColor;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span> *premiumRateColor;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p><code>.m</code></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UPHKMarketHSGTAHStockModel</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UIImage</span> *)marketFlagImage &#123;</span><br><span class="line">    <span class="keyword">return</span> UPHKImage(<span class="string">@"up_hk_market_hk"</span>);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">- (<span class="built_in">UIColor</span> *)hChangeRadioColor &#123;</span><br><span class="line">    <span class="keyword">return</span> [UPCompareTool compareWithData:<span class="keyword">self</span>.ahStock.hItem.changeRatio baseData:<span class="number">0</span> precise:<span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="built_in">UIColor</span> *)premiumRateColor &#123;</span><br><span class="line">    <span class="keyword">return</span> [UPCompareTool compareWithData:<span class="keyword">self</span>.ahStock.premiumRate baseData:<span class="number">0</span> precise:<span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用一个已经存在的类，但如果它的接口，也就是它的方法和你的要求不相同时，就应该考虑用适配器模式。</p>
+</blockquote>
+<ul>
+<li><p>讨论<br>jayma(马杰) 4-4 上午 9:25<br>我觉得对一个类或是一个模块的设计，肯定不是一成不变的，随着功能的增加，需求的变化，架构和模式是一个持续修改和优化的过程。<br>就现在来看倍牛里面还是有很多需要优化的地方。比如UserSDK里面的模块划分，分层结构，各个类的职责和功能，用户状态机的管理等等，现在感觉实现有点冗余，逻辑有点混乱，有很大的优化空间。<br>还有TradeSDK对UserSDK的依赖调用，是否有更加合理的方式等等</p>
+<p>jayma(马杰) 4-4 上午 9:27<br>可以从代码优化的方式入手，对着各种设计模式，多思考一下，这样搞过几轮后，理解应该会更加深入 [强]</p>
+</li>
+</ul>
+<p>….(单例模式、迭代器模式等待补充)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/27/Socket/" rel="next" title="Socket在iOS中的应用">
+                <i class="fa fa-chevron-left"></i> Socket在iOS中的应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="asone">
+            
+              <p class="site-author-name" itemprop="name">asone</p>
+              <p class="site-description motion-element" itemprop="description">My life is brilliant.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">asone</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
