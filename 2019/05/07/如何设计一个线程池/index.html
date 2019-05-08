@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言  为什么会有创建线程池的想法？可以先看下列代码 12345678910111213141516171819202122232425262728293031dispatch_queue_t queue = dispatch_queue_create(&amp;quot;com.xuelin.test.queue&amp;quot;, DISPATCH_QUEUE_CONCURRENT);    for (i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何设计一个线程池">
+<meta property="og:url" content="http://yoursite.com/2019/05/07/如何设计一个线程池/index.html">
+<meta property="og:site_name" content="大象席地而坐">
+<meta property="og:description" content="前言  为什么会有创建线程池的想法？可以先看下列代码 12345678910111213141516171819202122232425262728293031dispatch_queue_t queue = dispatch_queue_create(&amp;quot;com.xuelin.test.queue&amp;quot;, DISPATCH_QUEUE_CONCURRENT);    for (i">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-1351d0d61cd5ae10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/667">
+<meta property="og:updated_time" content="2019-05-08T08:45:11.908Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何设计一个线程池">
+<meta name="twitter:description" content="前言  为什么会有创建线程池的想法？可以先看下列代码 12345678910111213141516171819202122232425262728293031dispatch_queue_t queue = dispatch_queue_create(&amp;quot;com.xuelin.test.queue&amp;quot;, DISPATCH_QUEUE_CONCURRENT);    for (i">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2276492-1351d0d61cd5ae10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/667">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'XueLin'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/07/如何设计一个线程池/">
+
+
+
+
+
+  <title>如何设计一个线程池 | 大象席地而坐</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大象席地而坐</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/如何设计一个线程池/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="迷路的安然和无恙">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大象席地而坐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何设计一个线程池</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-07T10:35:35+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>前言</p>
+</blockquote>
+<p>为什么会有创建线程池的想法？可以先看下列代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_t queue = dispatch_queue_create(&quot;com.xuelin.test.queue&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">        dispatch_async(queue, ^&#123;</span><br><span class="line">            NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line">        dispatch_async(queue, ^&#123;</span><br><span class="line">            NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line">        dispatch_async(queue, ^&#123;</span><br><span class="line">            NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line">        dispatch_async(queue, ^&#123;</span><br><span class="line">            NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 控制台</span><br><span class="line">2019-05-07 22:25:54.910446+0800 Test[31185:148753] &lt;NSThread: 0x60000236a240&gt;&#123;number = 25, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.910783+0800 Test[31185:148788] &lt;NSThread: 0x600002329440&gt;&#123;number = 54, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.911451+0800 Test[31185:148784] &lt;NSThread: 0x6000023d0940&gt;&#123;number = 53, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.911949+0800 Test[31185:148796] &lt;NSThread: 0x60000239a700&gt;&#123;number = 64, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.912556+0800 Test[31185:148732] &lt;NSThread: 0x60000234ac80&gt;&#123;number = 12, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.912986+0800 Test[31185:148772] &lt;NSThread: 0x600002323240&gt;&#123;number = 40, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.913504+0800 Test[31185:148768] &lt;NSThread: 0x600002338a80&gt;&#123;number = 36, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.914018+0800 Test[31185:148794] &lt;NSThread: 0x6000023339c0&gt;&#123;number = 62, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.914706+0800 Test[31185:148771] &lt;NSThread: 0x600002326540&gt;&#123;number = 39, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.915028+0800 Test[31185:148759] &lt;NSThread: 0x60000231af40&gt;&#123;number = 28, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.915370+0800 Test[31185:148777] &lt;NSThread: 0x60000230bb80&gt;&#123;number = 45, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.915671+0800 Test[31185:148716] &lt;NSThread: 0x600002c0c600&gt;&#123;number = 6, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.916037+0800 Test[31185:148728] &lt;NSThread: 0x600002c0e080&gt;&#123;number = 9, name = (null)&#125;</span><br><span class="line">2019-05-07 22:25:54.916675+0800 Test[31185:148786] &lt;NSThread: 0x6000023d2d00&gt;&#123;number = 55, name = (null)&#125;</span><br></pre></td></tr></table></figure>
+<p>在大型的商业App中，线程的数量往往不太可控，如股票通项目中就有较多的绘制任务。异步的绘制虽然会带来体验的提升，但是过多线程创建和销毁，以及线程间的切换也会导致CPU的利用率降低。所以，创建合适数量的线程是优化线程管理的关键。</p>
+<p>在确定线程数的时候，需要根据当前App的任务类型来判断。比如IO密集型和计算密集型的是两种不同考虑方向。IO操作不占用CPU，所以适当的多创建线程数，有利于提高CPU的利用率；对于计算较多，执行时间又较短的的情况，可以创建和当前核心数相同的线程数来执行，大多数App都比较适用于第二种情况。</p>
+<blockquote>
+<p>线程池</p>
+</blockquote>
+<p>线程池可以这样理解，在App内创建指定数量的线程，线程创建后不会被销毁（单例），直到App退出，在App中有任务需要执行时，可以从线程池中轮询取出对应的任务队列（串行队列），将任务添加到队列中去。实际上，可控数目的线程池是基于创建和CPU核心数相同或略大于的串行队列数来实现的，并发队列之所以可以并发的在多条线程执行，是因为其任务完成并不需要先后顺序。</p>
+<blockquote>
+<p>思路一：</p>
+</blockquote>
+<p>在<code>YYDispatchQueuePool</code>中，作者的实现方案如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2276492-1351d0d61cd5ae10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/667" alt="image.png"></p>
+<p>具体代码如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line"><span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">	<span class="comment">// 获取当前活跃的核心数 </span></span><br><span class="line">	<span class="keyword">int</span> count = (<span class="keyword">int</span>)[<span class="built_in">NSProcessInfo</span> processInfo].activeProcessorCount;</span><br><span class="line">	count = count &lt; <span class="number">1</span> ? <span class="number">1</span> : count &gt; MAX_QUEUE_COUNT ? MAX_QUEUE_COUNT : count;</span><br><span class="line">	YYDispatchContext *context = [[YYDispatchContext alloc] initWithName:<span class="string">@"com.test.default"</span> queueCount:count qos:qos];</span><br><span class="line">	[dictM setValue:context forKey:@(<span class="built_in">NSQualityOfServiceDefault</span>).stringValue];</span><br><span class="line">&#125;);</span><br><span class="line">contextMap = dictM.copy;</span><br><span class="line"><span class="keyword">return</span> contextMap[@(<span class="built_in">NSQualityOfServiceDefault</span>).stringValue];</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line">- (YYDispatchContext *)initWithName:(<span class="built_in">NSString</span> *)name queueCount:(<span class="keyword">int</span>)queueCount qos:(<span class="built_in">NSQualityOfService</span>)qos &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">    <span class="comment">// 创建和核心数相同的串行队列 实现并行操作 </span></span><br><span class="line">        dispatch_qos_class_t qosClass = <span class="built_in">NSQualityOfServiceToQOSClass</span>(qos);</span><br><span class="line">        <span class="built_in">NSMutableArray</span> *queuesM = @[].mutableCopy;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> i = <span class="number">0</span>; i &lt; queueCount; i++) &#123;</span><br><span class="line">            dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, qosClass, <span class="number">0</span>);</span><br><span class="line">            <span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(name.UTF8String, attr);</span><br><span class="line">            [queuesM addObject:queue];</span><br><span class="line">        &#125;</span><br><span class="line">        _queues = queuesM.copy;</span><br><span class="line">        _queueCount  = queueCount;</span><br><span class="line">        _name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码可参考<a href="https://github.com/ibireme/YYKit" target="_blank" rel="noopener">YYKit</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/14/操作系统的存储管理/" rel="next" title="操作系统的存储管理">
+                <i class="fa fa-chevron-left"></i> 操作系统的存储管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/08/如何遍历iOS视图树/" rel="prev" title="如何遍历iOS视图树">
+                如何遍历iOS视图树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="迷路的安然和无恙">
+            
+              <p class="site-author-name" itemprop="name">迷路的安然和无恙</p>
+              <p class="site-description motion-element" itemprop="description">My life is brilliant.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷路的安然和无恙</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
