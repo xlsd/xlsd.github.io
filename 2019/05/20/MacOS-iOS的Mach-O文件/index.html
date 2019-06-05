@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-607bf091a1afaa5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-e615dc5d4fb16ec4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-05-21T07:22:44.091Z">
+<meta property="og:updated_time" content="2019-05-24T02:39:44.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MacOS&amp;iOS的Mach-O文件">
 <meta name="twitter:description" content="一个Mac程序或者是iOS程序的启动，是从一个可执行文件开始的，Mac或iOS上主要是Mach-O类型的可执行文件，类似的是Windows上的exe文件等。查看Mach-O文件所包含的信息，可以以此种方式导入头文件#import &amp;lt;mach-o/loader.h&amp;gt;。 在loader文件中又引入了如下文件 123456#include &amp;lt;stdint.h&amp;gt;	// mach文件">
@@ -337,7 +337,8 @@
 <p>Code Sign相信大多数开发者都知晓，这里要提一点的是，在进行Code sign的时候，加密哈希不是针对于整个文件，而是针对于每一个Page的。这就保证了在dyld进行加载的时候，可以对每一个page进行独立的验证。（引自<a href="https://www.jianshu.com/p/a51fcabc9c71" target="_blank" rel="noopener">深入理解iOS App的启动过程</a>）</p>
 <p>在动态库加载完毕并且<code>Rebase</code>和<code>Bind</code>后，会通知<code>Objc Runtime</code>，<code>Objc-Runtime</code> 会将类和方法列表建立映射关系，随后运行时调用动态库及用户代码的所有类的<code>+(void)load</code>方法，进行初始化所有类的操作，初始化完成后最终调用主<code>dylib</code>程序，也就是 <code>main()</code>。（补充：当一个类有多个分类时，分类中的<code>load</code>方法都会被调用，先调用原类的load，分类的load调用顺序是按照文件的编译顺序进行的）。如果多个分类中实现了原类中除load方法之外的其他方法，那最终只会调用最后一个被编译的分类中的方法，方法覆盖如下。<br><img src="https://upload-images.jianshu.io/upload_images/2276492-e615dc5d4fb16ec4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>上述是<code>App</code>启动的过程。</p>
-<p>Mach-O文件的数据主体可分为三大部分，分别是头部（Header）、加载命令（Load commands）、和最终的数据（Data）。</p>
+<p>结合可知 Mach-O 文件包含了三部分内容：</p>
+<p>Header（头部），指明了 cpu 架构、大小端序、文件类型、Load Commands 个数等一些基本信息<br>Load Commands（加载命令)，正如官方的图所示，描述了怎样加载每个 Segment 的信息。在 Mach-O 文件中可以有多个 Segment，每个 Segment 可能包含一个或多个 Section。<br>Data（数据区），Segment 的具体数据，包含了代码和数据等。</p>
 <p>参考:<br><a href="https://www.jianshu.com/p/ff8d039195bf" target="_blank" rel="noopener">iOS App 启动过程（二）：从 exec() 到 main()</a><br><a href="https://www.jianshu.com/p/a51fcabc9c71" target="_blank" rel="noopener">深入理解iOS App的启动过程</a><br><a href="https://juejin.im/post/5ab47ca1518825611a406a39" target="_blank" rel="noopener">探秘 Mach-O 文件</a></p>
 
       
@@ -372,6 +373,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/05/姥娘家/" rel="prev" title="姥娘家">
+                姥娘家 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -441,7 +446,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
