@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-607bf091a1afaa5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-e615dc5d4fb16ec4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-05-24T02:39:44.211Z">
+<meta property="og:updated_time" content="2019-06-09T09:21:35.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MacOS&amp;iOS的Mach-O文件">
 <meta name="twitter:description" content="一个Mac程序或者是iOS程序的启动，是从一个可执行文件开始的，Mac或iOS上主要是Mach-O类型的可执行文件，类似的是Windows上的exe文件等。查看Mach-O文件所包含的信息，可以以此种方式导入头文件#import &amp;lt;mach-o/loader.h&amp;gt;。 在loader文件中又引入了如下文件 123456#include &amp;lt;stdint.h&amp;gt;	// mach文件">
@@ -328,7 +328,7 @@
 <p>在<code>loader</code>文件中又引入了如下文件</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;stdint.h&gt;</span>	// mach文件格式的描述信息</span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;mach/machine.h&gt;</span> // 硬件设备信息如CPU型号等</span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;mach/vm_prot.h&gt;</span> // 内存的读写权限</span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;mach/machine/thread_status.h&gt;</span> // 线程状态</span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;architecture/byte_order.h&gt;</span> // 字节序相关</span></span><br></pre></td></tr></table></figure>
 <p><code>Mach-O</code>文件的作用：</p>
-<p>目前，计算机内存管理是以段式存储管理为主。以<code>iOS</code>的程序启动为例，用户在桌面点击<code>App</code>图标，负责系统管理的内核进程，读取当前<code>App</code>的可执行文件即<code>Mach-O</code>文件。随后开辟新进程，新进程开启后，根据<code>Mach-O</code>中的信息，<code>dynamic loader</code>会加载程序运行需要的动态库、静态库、bundle资源包等，加载到进程空间，<code>iOSApp</code>启动可大致分为<code>main</code>函数之前和<code>main</code>函数之后，在<code>main</code>函数之前，根据<code>Mach-O</code>文件中包含的信息加载程序所依赖的库，如libc++等；动态库加载完毕后，会进行<code>Fix-ups</code>，此过程分为<code>Rebase</code>和<code>Bind</code>。加载完所有的动态库后，动态库只是一个个单独的存在，此时需要通过 <code>fix-ups</code>使动态库相互关联。在 <code>__DATA segment</code>(数据段) 中有一个指针，可以用来跳转。<code>Rebase</code> 是内部调整指针；而 <code>Bind</code> 是在外部调整指针。</p>
+<p>目前，计算机内存管理是以段页存储管理为主。以<code>iOS</code>的程序启动为例，用户在桌面点击<code>App</code>图标，操作系统会开辟新进程，新进程开启后，操作系统读取当前<code>App</code>的可执行文件即<code>Mach-O</code>文件，根据<code>Mach-O</code>中的信息，动态加载器<code>dynamic loader</code>会加载程序运行需要的动态库、静态库、bundle资源包等，加载到进程空间，<code>iOSApp</code>启动可大致分为<code>main</code>函数之前和<code>main</code>函数之后，在<code>main</code>函数之前，根据<code>Mach-O</code>文件中包含的信息加载程序所依赖的库，如libc++等；动态库加载完毕后，会进行<code>Fix-ups</code>，此过程分为<code>Rebase</code>和<code>Bind</code>。加载完所有的动态库后，动态库只是一个个单独的存在，此时需要通过 <code>fix-ups</code>使动态库相互关联。在 <code>__DATA segment</code>(数据段) 中有一个指针，可以用来跳转。<code>Rebase</code> 是内部调整指针；而 <code>Bind</code> 是在外部调整指针。</p>
 <p>主要步骤如下：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/2276492-607bf091a1afaa5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>为什么需要Fix-ups这个步骤？</p>
@@ -339,6 +339,21 @@
 <p>上述是<code>App</code>启动的过程。</p>
 <p>结合可知 Mach-O 文件包含了三部分内容：</p>
 <p>Header（头部），指明了 cpu 架构、大小端序、文件类型、Load Commands 个数等一些基本信息<br>Load Commands（加载命令)，正如官方的图所示，描述了怎样加载每个 Segment 的信息。在 Mach-O 文件中可以有多个 Segment，每个 Segment 可能包含一个或多个 Section。<br>Data（数据区），Segment 的具体数据，包含了代码和数据等。</p>
+<blockquote>
+<p>Mach-O文件和LinkMap文件之间的区别和联系？分析这两个文件有什么作用？</p>
+</blockquote>
+<ul>
+<li>区别</li>
+</ul>
+<p><code>LinkMap</code>文件是在编译时产生的，它包含了所有的代码类和方法的信息，<code>LinkMap</code>分为三部分。<br><code>Object File</code>、<code>Section</code>、<code>Symbols</code>。<br><code>Object File</code>是代码工程的文件；<br><code>Section</code>是该代码段在所生成的Mach-O里面的偏移位置和大小。<br><code>Symbols</code>会列出每个方法、类、block以及他们的大小。<br>通过<code>LinkMap</code>可以统计所有方法和类，还可以看到代码所占包大小的分布。</p>
+<p><code>Mach-O</code>文件是一个可执行文件，它包含了程序执行所依赖的库、程序执行用到的方法列表、类列表等信息。</p>
+<ul>
+<li>联系</li>
+</ul>
+<p>找到无用的方法</p>
+<p>通过对比<code>LinkMap</code>和<code>Mach-O</code>，分析类及方法调用情况。<br>从<code>Mach-O</code>文件着手分析，哪些方法没有被调用。<code>objc_msgsend</code>在<code>Mach-O</code>文件里面是通过<code>————objc_selrefs</code>这个<code>section</code>来获取<code>selector</code>这个参数的。所以<code>objc_selrefs</code>里面的是一定被调用的。<br><code>LinkMap</code>中包含了代码中所有的方法，<code>Mach-O</code>中又可以获取到所有调用过的方法。那取差值就可以找到没有被调用过的方法了。</p>
+<p>找出无用的类</p>
+<p>使用上面的相同方法，可以找出字段<code>objc_classlist</code>的所有类，然后根据和<code>objc_classrefs</code>的差集，得出未使用过的类。</p>
 <p>参考:<br><a href="https://www.jianshu.com/p/ff8d039195bf" target="_blank" rel="noopener">iOS App 启动过程（二）：从 exec() 到 main()</a><br><a href="https://www.jianshu.com/p/a51fcabc9c71" target="_blank" rel="noopener">深入理解iOS App的启动过程</a><br><a href="https://juejin.im/post/5ab47ca1518825611a406a39" target="_blank" rel="noopener">探秘 Mach-O 文件</a></p>
 
       
