@@ -79,19 +79,17 @@
 
 
 
-<meta name="description" content="前言  写前言就跟高中时候写作文非要写个题记一样，成了习惯。有时候就觉的自己神经质，不过想起来高中时候有几次考试的作文是全班少有的高分，还是很激动的。 现在较为成熟稳定的商业App，基本都是由Native和H5混合搭建的，H5页面开发效率高，灵活性强，无需版本依赖。听起来优势很多，甚至有App整个模块都是H5页面开发的，因此也会带来用户体验的问题，我见过许多App，虽然是一整个模块H5，但是页面">
+<meta name="description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，SDKManager对外要简洁易用，返回类型清晰。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参数中，指定具体的参数类型，这样，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hybrid设计">
-<meta property="og:url" content="http://yoursite.com/2019/03/07/Hybrid设计/index.html">
+<meta property="og:title" content="SDK接口设计">
+<meta property="og:url" content="http://yoursite.com/2019/06/10/SDK接口设计/index.html">
 <meta property="og:site_name" content="大象席地而坐">
-<meta property="og:description" content="前言  写前言就跟高中时候写作文非要写个题记一样，成了习惯。有时候就觉的自己神经质，不过想起来高中时候有几次考试的作文是全班少有的高分，还是很激动的。 现在较为成熟稳定的商业App，基本都是由Native和H5混合搭建的，H5页面开发效率高，灵活性强，无需版本依赖。听起来优势很多，甚至有App整个模块都是H5页面开发的，因此也会带来用户体验的问题，我见过许多App，虽然是一整个模块H5，但是页面">
+<meta property="og:description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，SDKManager对外要简洁易用，返回类型清晰。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参数中，指定具体的参数类型，这样，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2276492-c3fb891df4e19fe3.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-03-13T14:03:01.622Z">
+<meta property="og:updated_time" content="2019-06-10T09:19:58.036Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hybrid设计">
-<meta name="twitter:description" content="前言  写前言就跟高中时候写作文非要写个题记一样，成了习惯。有时候就觉的自己神经质，不过想起来高中时候有几次考试的作文是全班少有的高分，还是很激动的。 现在较为成熟稳定的商业App，基本都是由Native和H5混合搭建的，H5页面开发效率高，灵活性强，无需版本依赖。听起来优势很多，甚至有App整个模块都是H5页面开发的，因此也会带来用户体验的问题，我见过许多App，虽然是一整个模块H5，但是页面">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2276492-c3fb891df4e19fe3.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="SDK接口设计">
+<meta name="twitter:description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，SDKManager对外要简洁易用，返回类型清晰。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参数中，指定具体的参数类型，这样，">
 
 
 
@@ -121,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/07/Hybrid设计/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/10/SDK接口设计/">
 
 
 
 
 
-  <title>Hybrid设计 | 大象席地而坐</title>
+  <title>SDK接口设计 | 大象席地而坐</title>
   
 
 
@@ -234,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/Hybrid设计/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/10/SDK接口设计/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="迷路的安然和无恙">
@@ -251,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hybrid设计</h1>
+          <h1 class="post-title" itemprop="name headline">SDK接口设计</h1>
         
 
         <div class="post-meta">
@@ -263,8 +261,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T21:26:49+08:00">
-                2019-03-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-10T15:15:53+08:00">
+                2019-06-10
               </time>
             
 
@@ -273,28 +271,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -323,18 +299,18 @@
       
 
       
-        <blockquote>
-<p>前言</p>
-</blockquote>
-<p>写前言就跟高中时候写作文非要写个题记一样，成了习惯。有时候就觉的自己神经质，不过想起来高中时候有几次考试的作文是全班少有的高分，还是很激动的。</p>
-<p>现在较为成熟稳定的商业App，基本都是由Native和H5混合搭建的，H5页面开发效率高，灵活性强，无需版本依赖。听起来优势很多，甚至有App整个模块都是H5页面开发的，因此也会带来用户体验的问题，我见过许多App，虽然是一整个模块H5，但是页面跳转的时候，在当前页面显示进度条真是叫人受不了。<br>上面只是基于用户层面讲，而对于开发层面来说，混合开发需要考虑许多问题，便有了此文章。<br>一般需要解决的问题：<br>1.数据交互<br>2.功能定制<br>…<br>数据交互是<code>Native-Web</code>双向的，部分功能的定制也是通过数据的交互实现的，定制化的功能又可以通过插件化的思想去实现，使得<code>HybridView</code>更加轻便。</p>
-<blockquote>
-<p>Hybrid设计架构图</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/2276492-c3fb891df4e19fe3.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>为了调用的安全，以及对<code>Native--Web</code>的交互统一,所以WebView并没有暴露给调用者，这也符合开放封闭的设计原则，对外可扩展，但不可修改。<br>在设计<code>HybridView</code>的时候，先后有几个版本，在<code>HybridEngine</code>之前<code>WebView</code>本是<code>HybridView</code>私有属性，但随着定制化的功能越来越多，如：需要分享功能、需要主题功能，一种比较好的解耦方式，就是对功能进行插件化的管理，所以，又引入了<code>HybridWebView</code>管理<code>WebView</code>，<code>HybridPlugin</code>作为<code>WebView</code>插件的基类，<code>HybridEngine</code>是<code>HybridView</code>处理<code>Webview</code>的操作者，同时也是外部插件整合到<code>WebView</code>上的处理者，其它关于Native-Web是如何方法调用传递参数交互的，请移步百度、谷歌。</p>
-<p><code>Custom</code>是一些定制化的UI样式，视具体业务而定，如左上角的返回按钮、弹出菜单等等。</p>
-<p>下面给WebView添加分享功能代码为例：</p>
+        <p>SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，<code>SDKManager</code>对外要简洁易用，返回类型清晰。</p>
+<p>如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。</p>
+<p>通常情况下，我们会给接口定义相应的<code>Block</code>，在<code>Block</code>的参数中，指定具体的参数类型，这样，调用者就可以比较清晰的得知该接口返回的数据模型。</p>
+<p>如下,返回值是一个字典：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 定义</span><br><span class="line">typedef void(^Response)(NSDictionary *dictionary);</span><br><span class="line"></span><br><span class="line">- (void)goblock:(Response)response;</span><br><span class="line"></span><br><span class="line">// 调用</span><br><span class="line">[p goblock:^(NSDictionary *dictionary) &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>如上，当接口数量较多，且返回的具体类型不同时，就需要定义大量的<code>Block</code>应对。或者，使用<code>id</code>类型。让调用者在数据返回时，自行查看返回的具体类型。</p>
+<p>如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 定义</span><br><span class="line">typedef void(^Response)(id obj);</span><br><span class="line"></span><br><span class="line">- (void)goblock:(Response)response;</span><br><span class="line"></span><br><span class="line">// 调用</span><br><span class="line">[p goblock:^(id obj) &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>两种方式都有缺点，那有没有一种方式，既可以省去定义大量<code>block</code>又可以在调用者调用接口时即可知道返回的数据具体类型呢？</p>
+<p>答案是：有的。</p>
+<p>在iOS中，有一个<code>objectType</code>类型，该类型允许在一个类声明时再指定具体的类型，同时，此类形式的泛型也可用关键词<code>__covariant</code>和<code>__contravariant</code>指定协变(子类型转父类型)或逆变（父类型转子类型）。<br>如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 定义</span><br><span class="line">@interface TAFResponse&lt;objectType&gt; : NSObject</span><br><span class="line">@property (nonatomic, strong) objectType what;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 在接口中的声明方式</span><br><span class="line">- (void)run:(void(^)(TAFResponse&lt;NSString *&gt; *response))callback;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 实现</span><br><span class="line">- (void)run:(void(^)(TAFResponse&lt;NSString *&gt; *response))callback &#123;</span><br><span class="line">    TAFResponse *rsp = [[TAFResponse alloc] init];</span><br><span class="line">    rsp.what = @&quot;test&quot;;</span><br><span class="line">    if (callback) &#123;</span><br><span class="line">        callback(rsp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 调用</span><br><span class="line">[p run:^(TAFResponse&lt;NSString *&gt; * _Nonnull response) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, response.what);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -359,8 +335,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/06/工程优化/" rel="next" title="工程优化">
-                <i class="fa fa-chevron-left"></i> 工程优化
+              <a href="/2019/06/09/如何设计一个高性能的图片下载及缓存框架？/" rel="next" title="如何设计一个高性能的图片下载及缓存框架？">
+                <i class="fa fa-chevron-left"></i> 如何设计一个高性能的图片下载及缓存框架？
               </a>
             
           </div>
@@ -368,10 +344,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/26/面试字节跳动/" rel="prev" title="面试字节跳动">
-                面试字节跳动 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
