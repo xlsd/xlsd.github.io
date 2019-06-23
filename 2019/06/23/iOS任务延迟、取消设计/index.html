@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="延迟任务设计  需求:顺序执行一系列任务，在这些任务中，有立即执行的，有延迟执行，并且未执行的任务支持取消。 苹果提供的API中，performSelector:afterDelay:的方法，是可以支持延迟执行的，还提供了cancelPreviousPerformRequestsWithTarget:用来取消当前类的方法列表中，待执行的某个方法，但是该实现代码并没有开源，而且在子线程执行也会存在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS任务延迟、取消设计">
+<meta property="og:url" content="http://yoursite.com/2019/06/23/iOS任务延迟、取消设计/index.html">
+<meta property="og:site_name" content="大象席地而坐">
+<meta property="og:description" content="延迟任务设计  需求:顺序执行一系列任务，在这些任务中，有立即执行的，有延迟执行，并且未执行的任务支持取消。 苹果提供的API中，performSelector:afterDelay:的方法，是可以支持延迟执行的，还提供了cancelPreviousPerformRequestsWithTarget:用来取消当前类的方法列表中，待执行的某个方法，但是该实现代码并没有开源，而且在子线程执行也会存在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-23T14:44:11.306Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS任务延迟、取消设计">
+<meta name="twitter:description" content="延迟任务设计  需求:顺序执行一系列任务，在这些任务中，有立即执行的，有延迟执行，并且未执行的任务支持取消。 苹果提供的API中，performSelector:afterDelay:的方法，是可以支持延迟执行的，还提供了cancelPreviousPerformRequestsWithTarget:用来取消当前类的方法列表中，待执行的某个方法，但是该实现代码并没有开源，而且在子线程执行也会存在">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'XueLin'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/23/iOS任务延迟、取消设计/">
+
+
+
+
+
+  <title>iOS任务延迟、取消设计 | 大象席地而坐</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大象席地而坐</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/iOS任务延迟、取消设计/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="迷路的安然和无恙">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大象席地而坐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS任务延迟、取消设计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-23T22:43:32+08:00">
+                2019-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>延迟任务设计</p>
+</blockquote>
+<p>需求:顺序执行一系列任务，在这些任务中，有立即执行的，有延迟执行，并且未执行的任务支持取消。</p>
+<p>苹果提供的API中，<code>performSelector:afterDelay:</code>的方法，是可以支持延迟执行的，还提供了<code>cancelPreviousPerformRequestsWithTarget:</code>用来取消当前类的方法列表中，待执行的某个方法，但是该实现代码并没有开源，而且在子线程执行也会存在问题，稍后讨论。</p>
+<p>那遇到这样的需求，应该怎样设计呢？</p>
+<p>主要需要思考以下问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* 任务需要顺序执行</span><br><span class="line">* 未执行的任务可取消</span><br><span class="line">* 延迟执行的任务的处理方式</span><br><span class="line">* 多线程调用可能带来的问题</span><br><span class="line">* 执行效率高</span><br></pre></td></tr></table></figure>
+<p>在设计这个模型的过程中，我选用了单链表结构，每个任务都是链表的一个结点。<br>选定单链表结构后，要实现上面的功能，只需如下的操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 每次加入任务结点时，构建单链表，将结点插入链表适当的位置。</span><br><span class="line">2. 需要删除任务时，查找链表中的任务结点（时间复杂度为O(n)），并删除该结点。</span><br><span class="line">3. 对于需要延迟执行的任务，需要创建一个timer，来记录触发时间。</span><br><span class="line">4. 在链表的插入和删除时，为了线程安全，在内部创建了一个串行队列，将插入和删除的操作都加入到该串行队列中。</span><br><span class="line">5. 效率问题是选用链表结构的关键，链表结构可以进行较快速的插入和删除结点.如果使用线性顺序表，线性顺序表有个特点，它不管是逻辑地址还是物理地址都是连续的，那插入一个节点的时间复杂度是O(n)，而链表的时间复杂度为O(1)；为什么没有选双向链表，因为双向链表在结构上比单链表的结点多了一个指针，每个指针也占有一定的空间，但是查找效率确实别单链表高，也就是时间换空间，或者空间换时间的问题，看最在乎哪个了，在此处用单链表就可以了。</span><br></pre></td></tr></table></figure>
+<p>把所有任务构建成一个单链表结构，如<code>A -&gt; B -&gt; C</code>.<br>在向链表加入结点的时候，根据结点任务的<code>Delay</code>时间，找到应该插入的位置，这样，在链表中，所有的结点都是按照应该执行的时间进行的排序的。<br>如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 依次将A B C D加入到链表中，构建出来的单链表应该是</span><br><span class="line">A:1.5s  B:3s  C:0s  D:0s</span><br><span class="line"></span><br><span class="line">// 假设加入的时间差无穷小，那构建的单链表就应该是</span><br><span class="line">B -&gt; A -&gt; D -&gt; C</span><br></pre></td></tr></table></figure>
+<p>对于需要延时执行的结点任务，会根据任务结点加入到链表中的时间和延迟执行的时间计算出触发时间，然后开启CGDTimer，到时间后触发执行该任务结点，已经触发的任务结点会从单链表中删除。</p>
+<p>核心设计思想就是这样。<br><code>iOS</code>中未开源这部分代码的实现，但是安卓<code>Handler</code>的<code>postDelay:</code>代码是开源的，所以这个逻辑也是参考了安卓代码的实现逻辑，因为系统的<code>perform:</code>也是在内部创建的timer实现的计时，所以我猜测实现的原理应该相似。</p>
+<blockquote>
+<p>为什么在子线程调用<code>performSelector:afterDelay</code>会有问题？</p>
+</blockquote>
+<p>如下代码是直接在子线程执行<code>performSelector:</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;        </span><br><span class="line">    [self performSelector:@selector(scrollSetting) withObject:nil afterDelay:3];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>方法<code>scrollSetting</code>不会被执行。如果想让它执行可以使用如下方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;        </span><br><span class="line">    [self performSelector:@selector(scrollSetting) withObject:nil afterDelay:3];</span><br><span class="line">&#125;);</span><br><span class="line">NSPort *port = [NSPort port];</span><br><span class="line">[[NSRunLoop currentRunLoop] addPort:port forMode:NSDefaultRunLoopMode];</span><br><span class="line">[[NSRunLoop currentRunLoop] run];</span><br></pre></td></tr></table></figure>
+<p>这是因为<code>performSelector:</code>内部创建的<code>Timer</code>作为事件源需要加入到<code>RunLoop</code>中NSTimer 是用了 XNU 内核的 mk_timer。主线程的<code>RunLoop</code>是App启动后就默认开启的之外，由于<code>RunLoop</code>是一个懒加载的对象，子线程中只要不调用，那它永远不会被创建，所以<code>Timer</code>事件源就无法被添加到<code>RunLoop</code>中，所以事件不会被触发，有关<a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">RunLoop可以看这里</a>。</p>
+<p>为了避免在在子线程执行失败，<code>UPHandler</code>内部使用的是<code>CGDTimer</code>。</p>
+<blockquote>
+<p>为什么不是<code>NSTimer</code>或者<code>CADisplayLink</code>?</p>
+</blockquote>
+<p><code>NSTimer</code>缺点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* 必须保证有一个活跃的RunLoop</span><br><span class="line">* 容易造成循环引用</span><br><span class="line">* 计时不准确</span><br><span class="line">* NSTimer的创建与撤销必须在同一个线程操作、performSelector的创建与撤销必须在同一个线程操作</span><br></pre></td></tr></table></figure>
+<p><code>CADisplayLink</code>缺点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 计时不准确</span><br></pre></td></tr></table></figure>
+<p><code>NSTimer</code>和<code>CADisplayLink</code>所带来的问题，都是因为他们事件源都在当前线程的RunLoop上，如果当前<code>RunLoop</code>任务过重，那执行一个循环的时间就会变长，那在<code>RunLoop</code>中的事件回调执行也会延迟。导致依赖<code>RunLoop</code>的计时器都不精确。</p>
+<blockquote>
+<p>为什么是<code>GCDTimer</code>?</p>
+</blockquote>
+<p>GCD更准时的原因<br>GCD定时器使用了dispatch源(dispatch source)，dispatch源监听系统内核对象并处理。dispatch类似生产者消费者模式，通过监听系统内核对象，在生产者生产数据后自动通知相应的dispatch队列执行，后者充当消费者。通过系统级调用，更加精准。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/10/SDK接口设计/" rel="next" title="SDK接口设计">
+                <i class="fa fa-chevron-left"></i> SDK接口设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="迷路的安然和无恙">
+            
+              <p class="site-author-name" itemprop="name">迷路的安然和无恙</p>
+              <p class="site-description motion-element" itemprop="description">My life is brilliant.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迷路的安然和无恙</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
