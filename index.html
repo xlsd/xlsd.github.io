@@ -481,11 +481,11 @@
       
         
           
-          SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，SDKManager对外要简洁易用，返回类型清晰。
+          SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合理的设计模式外，SDKManager对外要简洁易用，返回类型清晰，另外尽可能的使不同端的接口一致。
 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。
 通常情况下，我们会给接口定义相应的Block，在Block的参数中，指定具体的参数类型，这样，调用者就可以比较清晰的得知该接口返回的数据模型。
 如下,返回值是一个字典：
-123456789// 定义typedef void(^Response)(NSDictionary *dictionary);- (void)goblock:(Response)response;// 调用[p goblock:^(NSDic
+123456789// 定义typedef void(^Response)(NSDictionary *dictionary);- (void)goblock:(Response)response;// 调用[p
           ...
           <!--noindex-->
           <div class="post-button text-center">

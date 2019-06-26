@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="大象席地而坐">
 <meta property="og:description" content="延迟任务设计  需求:顺序执行一系列任务，在这些任务中，有立即执行的，有延迟执行，并且未执行的任务支持取消。 苹果提供的API中，performSelector:afterDelay:的方法，是可以支持延迟执行的，还提供了cancelPreviousPerformRequestsWithTarget:用来取消当前类的方法列表中，待执行的某个方法，但是该实现代码并没有开源，而且在子线程执行也会存在">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-23T14:44:11.306Z">
+<meta property="og:updated_time" content="2019-06-26T02:16:11.908Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS任务延迟、取消设计">
 <meta name="twitter:description" content="延迟任务设计  需求:顺序执行一系列任务，在这些任务中，有立即执行的，有延迟执行，并且未执行的任务支持取消。 苹果提供的API中，performSelector:afterDelay:的方法，是可以支持延迟执行的，还提供了cancelPreviousPerformRequestsWithTarget:用来取消当前类的方法列表中，待执行的某个方法，但是该实现代码并没有开源，而且在子线程执行也会存在">
@@ -342,7 +342,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;        </span><br><span class="line">    [self performSelector:@selector(scrollSetting) withObject:nil afterDelay:3];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>方法<code>scrollSetting</code>不会被执行。如果想让它执行可以使用如下方式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;        </span><br><span class="line">    [self performSelector:@selector(scrollSetting) withObject:nil afterDelay:3];</span><br><span class="line">&#125;);</span><br><span class="line">NSPort *port = [NSPort port];</span><br><span class="line">[[NSRunLoop currentRunLoop] addPort:port forMode:NSDefaultRunLoopMode];</span><br><span class="line">[[NSRunLoop currentRunLoop] run];</span><br></pre></td></tr></table></figure>
-<p>这是因为<code>performSelector:</code>内部创建的<code>Timer</code>作为事件源需要加入到<code>RunLoop</code>中NSTimer 是用了 XNU 内核的 mk_timer。主线程的<code>RunLoop</code>是App启动后就默认开启的之外，由于<code>RunLoop</code>是一个懒加载的对象，子线程中只要不调用，那它永远不会被创建，所以<code>Timer</code>事件源就无法被添加到<code>RunLoop</code>中，所以事件不会被触发，有关<a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">RunLoop可以看这里</a>。</p>
+<p>这是因为<code>performSelector:</code>内部创建的<code>Timer</code>作为事件源需要加入到<code>RunLoop</code>中，NSTimer 是用了 XNU 内核的 mk_timer。主线程的<code>RunLoop</code>是App启动后就默认开启的之外，由于<code>RunLoop</code>是一个懒加载的对象，子线程中只要不调用，那它永远不会被创建，所以<code>Timer</code>事件源就无法被添加到<code>RunLoop</code>中，所以事件不会被触发，有关<a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">RunLoop可以看这里</a>。</p>
 <p>为了避免在在子线程执行失败，<code>UPHandler</code>内部使用的是<code>CGDTimer</code>。</p>
 <blockquote>
 <p>为什么不是<code>NSTimer</code>或者<code>CADisplayLink</code>?</p>

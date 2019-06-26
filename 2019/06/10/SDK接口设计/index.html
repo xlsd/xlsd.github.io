@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，SDKManager对外要简洁易用，返回类型清晰。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参数中，指定具体的参数类型，这样，">
+<meta name="description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合理的设计模式外，SDKManager对外要简洁易用，返回类型清晰，另外尽可能的使不同端的接口一致。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDK接口设计">
 <meta property="og:url" content="http://yoursite.com/2019/06/10/SDK接口设计/index.html">
 <meta property="og:site_name" content="大象席地而坐">
-<meta property="og:description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，SDKManager对外要简洁易用，返回类型清晰。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参数中，指定具体的参数类型，这样，">
+<meta property="og:description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合理的设计模式外，SDKManager对外要简洁易用，返回类型清晰，另外尽可能的使不同端的接口一致。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-10T09:21:03.280Z">
+<meta property="og:updated_time" content="2019-06-26T02:15:54.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDK接口设计">
-<meta name="twitter:description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，SDKManager对外要简洁易用，返回类型清晰。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参数中，指定具体的参数类型，这样，">
+<meta name="twitter:description" content="SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合理的设计模式外，SDKManager对外要简洁易用，返回类型清晰，另外尽可能的使不同端的接口一致。 如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。 通常情况下，我们会给接口定义相应的Block，在Block的参">
 
 
 
@@ -321,7 +321,7 @@
       
 
       
-        <p>SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合适的设计模式外，<code>SDKManager</code>对外要简洁易用，返回类型清晰。</p>
+        <p>SDK的设计一般是由SDK所提供的服务决定的。如果SDK只是给数据提供接口，那除了必要的层次设计、合理的设计模式外，<code>SDKManager</code>对外要简洁易用，返回类型清晰，另外尽可能的使不同端的接口一致。</p>
 <p>如果SDK所提供的接口是异步返回的，通常情况下，需要在调用的时候传入一个Block。在SDK内部完成异步任务后，调用block返回数据。</p>
 <p>通常情况下，我们会给接口定义相应的<code>Block</code>，在<code>Block</code>的参数中，指定具体的参数类型，这样，调用者就可以比较清晰的得知该接口返回的数据模型。</p>
 <p>如下,返回值是一个字典：</p>
