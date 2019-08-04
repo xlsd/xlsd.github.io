@@ -232,6 +232,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/04/Cocoapods组件管理流程/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="迷路的安然和无恙">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大象席地而坐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/04/Cocoapods组件管理流程/" itemprop="url">Cocoapods组件管理流程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-04T18:14:45+08:00">
+                2019-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+前言
+
+因为上家待了两年多的公司并没有使用Cocoapods管理工程，所以对Cocopods接触并不多，只会一些基础的命令。近期入职了新公司，使用的是Cocoapods管理的组件。所以抽了两天时间整明白了这个Cocoapods组件化的管理流程。
+下面的文章更类似于一个Cocoapods组件化的操作流程，会有详细的命令及解释以及常用的脚本及解释。
+Cocoapods组件化管理需要以下流程：
+1.在代码托管平台(gitHub、gitLub、gitee…)开辟私有的Sepcs库，作为Pods源。2.创建私有组件，并将私有组件的sepc文件推送到第一步开辟的Sepcs库中。3.将开辟的Sepcs库添加到本地的Cocoapods库中。
+1pod repo add test-specs https://gitee.com
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/04/Cocoapods组件管理流程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/iOS任务延迟、取消设计/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -644,15 +799,17 @@
 
 架构设计：总体架构、性能、接口设计。
 图片加载流程
-内存设计
-磁盘设计
-网络设计
+内存缓存设计
+磁盘缓存设计
+图片下载
 图片编解码设计
 
 
-逐一分析
+架构设计
 
-图片的编解码
+SDWebImage架构图
+……
+在查阅资料的时候，看到了这个同学写的图片解析过程的分析，很好。推荐一下。
 
           
           <!--noindex-->
@@ -1624,167 +1781,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/内核级多线程和用户级多线程比较/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="迷路的安然和无恙">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大象席地而坐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/12/内核级多线程和用户级多线程比较/" itemprop="url">内核级多线程KLT和用户级多线程ULT比较</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T23:09:04+08:00">
-                2019-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-为什么有了多进程还有有多线程？
-为什么多线程有分为内核级多线程和用户级多线程？
-内核及多线程和用户级多线程优缺点？
-
-先说几个概念：进程：是执行中的一段程序，即一旦程序被载入到内存中并准备执行，它就是一个进程。进程是表示资源分配的基本概念，又是调度运行的基本单位，是系统中并发执行的单位。线程：线程是进程中执行运算的最小单位，也就是用来执行任务的，同一进程可以拥有多条线程，它们之间共享同一进程中的内存和资源。
-模式切换：进程切换必须在操作系统内核模式下完成，就需要模式切换。模式切换又称为处理器状态切换，包括
-
-用户模式到内核模式中断/异常/系统/系统调用，中断用户进程执行而出发。（正向切换）
-内核模式到用户模式OS执行中断返回指令：将控制权交还用户进程而触发。（逆向切换）
-
-内核级线程KLT
-
-线程管理的所有工
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/12/内核级多线程和用户级多线程比较/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1837,7 +1833,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

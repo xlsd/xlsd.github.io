@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="大象席地而坐">
 <meta property="og:description" content="前言  在思考如何设计一个高性能的图片下载及缓存框架的时候，需要考虑到在图片下载及缓存中影响性能的问题，然后找到相应的解决方法，本文通过比较知名的图片下载及缓存框架SDWebImage、LKImageKit、YYImage，来探讨究竟应该怎样设计一个图片处理的框架。  那些影响性能的问题  设计高性能图片下载及缓存框架的时候，主要需要考虑以下问题：  架构设计：总体架构、性能、接口设计。 图片加">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-10T09:20:58.353Z">
+<meta property="og:updated_time" content="2019-07-21T08:23:49.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何设计一个高性能的图片下载及缓存框架？">
 <meta name="twitter:description" content="前言  在思考如何设计一个高性能的图片下载及缓存框架的时候，需要考虑到在图片下载及缓存中影响性能的问题，然后找到相应的解决方法，本文通过比较知名的图片下载及缓存框架SDWebImage、LKImageKit、YYImage，来探讨究竟应该怎样设计一个图片处理的框架。  那些影响性能的问题  设计高性能图片下载及缓存框架的时候，主要需要考虑以下问题：  架构设计：总体架构、性能、接口设计。 图片加">
@@ -332,15 +332,17 @@
 <ul>
 <li>架构设计：总体架构、性能、接口设计。</li>
 <li>图片加载流程</li>
-<li>内存设计</li>
-<li>磁盘设计</li>
-<li>网络设计</li>
+<li>内存缓存设计</li>
+<li>磁盘缓存设计</li>
+<li>图片下载</li>
 <li>图片编解码设计</li>
 </ul>
 <blockquote>
-<p>逐一分析</p>
+<p>架构设计</p>
 </blockquote>
-<p>图片的编解码</p>
+<p>SDWebImage架构图</p>
+<p>……</p>
+<p>在查阅资料的时候，看到了<a href="https://dreampiggy.com/2019/01/18/%E4%B8%BB%E6%B5%81%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E5%BA%93%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E9%A2%84%E8%A7%A3%E7%A0%81%E7%A9%B6%E7%AB%9F%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/#more" target="_blank" rel="noopener">这个同学</a>写的图片解析过程的分析，很好。推荐一下。</p>
 
       
     </div>
@@ -447,7 +449,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
