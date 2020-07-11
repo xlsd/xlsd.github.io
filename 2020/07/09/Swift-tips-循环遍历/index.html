@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="forEach(_:)  For example: 123456789101112let numberWords = [&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;, &amp;quot;three&amp;quot;]for word in numberWords &amp;#123;    print(word)&amp;#125;// Prints &amp;quot;one&amp;quot;// Prints &amp;">
+<meta name="description" content="循环遍历 forEach(_:)  For example: 123456789101112let numberWords = [&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;, &amp;quot;three&amp;quot;]for word in numberWords &amp;#123;    print(word)&amp;#125;// Prints &amp;quot;one&amp;quot;// Prin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift tips: 循环遍历">
+<meta property="og:title" content="Swift tips">
 <meta property="og:url" content="http://yoursite.com/2020/07/09/Swift-tips-循环遍历/index.html">
 <meta property="og:site_name" content="大象席地而坐">
-<meta property="og:description" content="forEach(_:)  For example: 123456789101112let numberWords = [&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;, &amp;quot;three&amp;quot;]for word in numberWords &amp;#123;    print(word)&amp;#125;// Prints &amp;quot;one&amp;quot;// Prints &amp;">
+<meta property="og:description" content="循环遍历 forEach(_:)  For example: 123456789101112let numberWords = [&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;, &amp;quot;three&amp;quot;]for word in numberWords &amp;#123;    print(word)&amp;#125;// Prints &amp;quot;one&amp;quot;// Prin">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-09T15:57:24.036Z">
+<meta property="og:updated_time" content="2020-07-11T04:43:06.986Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift tips: 循环遍历">
-<meta name="twitter:description" content="forEach(_:)  For example: 123456789101112let numberWords = [&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;, &amp;quot;three&amp;quot;]for word in numberWords &amp;#123;    print(word)&amp;#125;// Prints &amp;quot;one&amp;quot;// Prints &amp;">
+<meta name="twitter:title" content="Swift tips">
+<meta name="twitter:description" content="循环遍历 forEach(_:)  For example: 123456789101112let numberWords = [&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;, &amp;quot;three&amp;quot;]for word in numberWords &amp;#123;    print(word)&amp;#125;// Prints &amp;quot;one&amp;quot;// Prin">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>Swift tips: 循环遍历 | 大象席地而坐</title>
+  <title>Swift tips | 大象席地而坐</title>
   
 
 
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Swift tips: 循环遍历</h1>
+          <h1 class="post-title" itemprop="name headline">Swift tips</h1>
         
 
         <div class="post-meta">
@@ -321,11 +321,17 @@
       
 
       
-        <blockquote>
+        <h5 id="循环遍历"><a href="#循环遍历" class="headerlink" title="循环遍历"></a>循环遍历</h5><blockquote>
 <p>forEach(_:)</p>
 </blockquote>
 <p>For example:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">let numberWords = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]</span><br><span class="line">for word in numberWords &#123;</span><br><span class="line">    print(word)</span><br><span class="line">&#125;</span><br><span class="line">// Prints &quot;one&quot;</span><br><span class="line">// Prints &quot;two&quot;</span><br><span class="line">// Prints &quot;three&quot;</span><br><span class="line"></span><br><span class="line">numberWords.forEach &#123; word in</span><br><span class="line">    print(word)</span><br><span class="line">&#125;</span><br><span class="line">// Same as above</span><br></pre></td></tr></table></figure>
+<h5 id="try"><a href="#try" class="headerlink" title="try"></a>try</h5><p><code>try?</code>的使用<br> 如果不想处理异常那么可以用这个关键字,使用这个关键字返回一个可选值类型,如果有异常出现,返回nil.如果没有异常,则返回可选值.例子如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">func testFunc(str: String) throws -&gt; String  &#123;</span><br><span class="line"></span><br><span class="line">    if str == &quot;one&quot; &#123;</span><br><span class="line">        throw MyError.one</span><br><span class="line">    &#125;else if str == &quot;two&quot; &#123;</span><br><span class="line">        throw MyError.two</span><br><span class="line">    &#125;else if str == &quot;three&quot; &#123;</span><br><span class="line">        throw MyError.three</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;ok&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var str = try? testFunc(str: &quot;three&quot;)</span><br><span class="line">print(str)</span><br><span class="line">// 运行结果</span><br><span class="line">// nil</span><br><span class="line">// Program ended with exit code: 0</span><br></pre></td></tr></table></figure>
+<p>try!的使用</p>
+<p>如果不想处理异常,而且不想让异常继续传播下去,可以使用try!.这有点儿类似NSAssert().但是一旦使用try!后,在可能抛出异常的方法中抛出了异常,那么程序会立刻停止.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">enum MyError : Error &#123;</span><br><span class="line">    case one</span><br><span class="line">    case two</span><br><span class="line">    case three</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func testFunc(str: String) throws -&gt; String  &#123;</span><br><span class="line"></span><br><span class="line">    if str == &quot;one&quot; &#123;</span><br><span class="line">        throw MyError.one</span><br><span class="line">    &#125;else if str == &quot;two&quot; &#123;</span><br><span class="line">        throw MyError.two</span><br><span class="line">    &#125;else if str == &quot;three&quot; &#123;</span><br><span class="line">        throw MyError.three</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;ok&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var str = try! testFunc(str: &quot;three&quot;)</span><br><span class="line"></span><br><span class="line">// 控制台:程序奔溃掉~</span><br></pre></td></tr></table></figure>
+<p><code>try</code> 出现异常处理异常<br><code>try?</code> 不处理异常,返回一个可选值类型,出现异常返回nil<br><code>try!</code> 不让异常继续传播,一旦出现异常程序停止,类似NSAssert()</p>
 
       
     </div>
@@ -410,8 +416,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -464,6 +479,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#循环遍历"><span class="nav-number">1.</span> <span class="nav-text">循环遍历</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#try"><span class="nav-number">2.</span> <span class="nav-text">try</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
