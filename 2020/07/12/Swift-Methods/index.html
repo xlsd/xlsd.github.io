@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="大象席地而坐">
 <meta property="og:description" content="Methods方法是和特殊类型相关联的函数。类、结构体、枚举都可以定义实例方法，也可以定义类型方法type methods， 它关联它自己的类型，类似于objective-C中的类方法class methods。 结构体和枚举可以定义方法是Swift和C及Objective-C最大的不同，在Objective-C中，类是唯一可以定义方法的类型。在Swift中，你可以选择是否定义一个类、结构体或者枚">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-12T15:21:17.682Z">
+<meta property="og:updated_time" content="2020-07-15T14:51:16.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift Methods">
 <meta name="twitter:description" content="Methods方法是和特殊类型相关联的函数。类、结构体、枚举都可以定义实例方法，也可以定义类型方法type methods， 它关联它自己的类型，类似于objective-C中的类方法class methods。 结构体和枚举可以定义方法是Swift和C及Objective-C最大的不同，在Objective-C中，类是唯一可以定义方法的类型。在Swift中，你可以选择是否定义一个类、结构体或者枚">
@@ -332,8 +332,25 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">enum TriStateSwitch &#123;</span><br><span class="line">    case off, low, high</span><br><span class="line">    mutating func next() &#123;</span><br><span class="line">        switch self &#123;</span><br><span class="line">        case .off:</span><br><span class="line">            self = .low</span><br><span class="line">        case .low:</span><br><span class="line">            self = .high</span><br><span class="line">        case .high:</span><br><span class="line">            self = .off</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var ovenLight = TriStateSwitch.low</span><br><span class="line">ovenLight.next()</span><br><span class="line">// ovenLight is now equal to .high</span><br><span class="line">ovenLight.next()</span><br><span class="line">// ovenLight is now equal to .off</span><br></pre></td></tr></table></figure>
 <h4 id="Type-Methods"><a href="#Type-Methods" class="headerlink" title="Type Methods"></a>Type Methods</h4><p>如上所述的对象方法是给特定的对象调用的，其实你也可以定义给类型调用的方法。这类方法被称为类型方法。在此类方法的前面会有<code>static</code>关键字修饰。类可以用<code>class</code>关键字代替，允许子类能够覆写父类的实现。</p>
 <blockquote>
-<p>NOTE: 在Objective-C宏，你只能在类中定义类方法，但是在Swift中，你可以给所有的类定义类型级别的方法的方法，类、结构体、枚举。每种类型方法都显式的限定为它所支持的类型。</p>
+<p>NOTE: 在Objective-C中，你只能在类中定义类方法，但是在Swift中，你可以给所有的类定义类型级别的方法的方法，类、结构体、枚举。每种类型方法都显式的限定为它所支持的类型。</p>
 </blockquote>
+<p>如下是一个类方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class SomeClass &#123;</span><br><span class="line">    class func someTypeMethod() &#123;</span><br><span class="line">        // type method implementation goes here</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">SomeClass.someTypeMethod()</span><br></pre></td></tr></table></figure>
+<p>在类方法中<code>self</code>代表当前类。</p>
+<h3 id="subscript-集合下标"><a href="#subscript-集合下标" class="headerlink" title="subscript(集合下标)"></a>subscript(集合下标)</h3><p>类，结构和枚举可以定义下标，这些下标是用于访问集合，列表或序列的成员元素的快捷方式。您可以使用下标按索引设置和检索值，而无需使用单独的方法进行设置和检索。例如，您可以访问在元素Array实例作为someArray[index]和元素的Dictionary实例作为someDictionary[key]。</p>
+<p>您可以为单个类型定义多个下标，然后根据传递给下标的索引值的类型选择要使用的适当下标重载。下标不限于单个维度，您可以定义具有多个输入参数的下标以满足您的自定义类型的需求。</p>
+<p>如何使用自定义下标使数组访问更安全？</p>
+<p>Swift喜欢安全，但其中一个有问题的领域可能是从数组和字典中读取。对于字典，读取丢失的键将返回nil而不是您可能期望的值，但是对于数组，情况更糟：您的应用程序将崩溃。</p>
+<p>字典具有特殊的下标方法，如果您请求缺少键，则可以发送默认值，而数组则不是。幸运的是，我们可以使用Swift的扩展来解决此问题：</p>
+<p>如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">extension Array &#123;</span><br><span class="line">    public subscript(index: Int, default defaultValue: @autoclosure () -&gt; Element) -&gt; Element &#123;</span><br><span class="line">        guard index &gt;= 0, index &lt; endIndex else &#123;</span><br><span class="line">            return defaultValue()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return self[index]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样可以使用<code>@autoclosure()</code>您的默认值进行计算，但是在使用有效数组索引时不会造成性能下降。</p>
+<p>有了该扩展名之后，您现在可以照常创建和使用数组：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var names = [&quot;Paul&quot;]</span><br><span class="line">let paul = names[0]</span><br></pre></td></tr></table></figure>
+<p>现在还可以使用新的下标读取任何索引，并确保获取安全值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let anon1 = names[-1, default: &quot;Anonymous&quot;]</span><br><span class="line">let anon2 = names[1, default: &quot;Anonymous&quot;]</span><br><span class="line">let anon3 = names[556, default: &quot;Anonymous&quot;]</span><br></pre></td></tr></table></figure>
+<p>或者，您可以编写一个safeIndex下标，该下标返回一个可选值- nil如果索引超出范围，否则返回所讨论的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">extension Array &#123;</span><br><span class="line">    public subscript(safeIndex index: Int) -&gt; Element? &#123;</span><br><span class="line">        guard index &gt;= 0, index &lt; endIndex else &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return self[index]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -491,7 +508,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Methods"><span class="nav-number">1.</span> <span class="nav-text">Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Instance-Methods"><span class="nav-number">1.1.</span> <span class="nav-text">Instance Methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Type-Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Type Methods</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Methods"><span class="nav-number">1.</span> <span class="nav-text">Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Instance-Methods"><span class="nav-number">1.1.</span> <span class="nav-text">Instance Methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Type-Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Type Methods</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subscript-集合下标"><span class="nav-number">2.</span> <span class="nav-text">subscript(集合下标)</span></a></li></ol></div>
             
 
           </div>
