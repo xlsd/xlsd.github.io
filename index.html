@@ -327,8 +327,11 @@
           
           本文译自Paul Hudson 原文
 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。
-
-          
+这三个方法中都包含map这个单词，它在上下文中的意思是“把一个变成另一个”。因此，map()方法可以让我们把数组中的每个元素变成它自身的两倍，如下：
+12let numbers = [1, 2, 3, 4, 5]let double = numbers.map &#123;$0 * 2&#125;
+$0是第一个参数的缩写，通过闭包，它会变成1 * 2， 2 * 2， 3 * 2等等，并使用乘后的结果替换之前的元素的值。
+以下方法会把每个元素都改
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/07/16/map-、flatMap-和compactMap-之间有什么区别？/#more" rel="contents">

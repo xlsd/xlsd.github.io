@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。">
+<meta name="description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。 这三个方法中都包含map这个单词，它在上下文中的意思是“把一个变成另一个”。因此，map()方法可以让我们把数组中的每个元素变成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="map()、flatMap()和compactMap()之间有什么区别？">
 <meta property="og:url" content="http://yoursite.com/2020/07/16/map-、flatMap-和compactMap-之间有什么区别？/index.html">
 <meta property="og:site_name" content="大象席地而坐">
-<meta property="og:description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。">
+<meta property="og:description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。 这三个方法中都包含map这个单词，它在上下文中的意思是“把一个变成另一个”。因此，map()方法可以让我们把数组中的每个元素变成">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-16T15:50:31.966Z">
+<meta property="og:updated_time" content="2020-07-18T15:43:20.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="map()、flatMap()和compactMap()之间有什么区别？">
-<meta name="twitter:description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。">
+<meta name="twitter:description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。 这三个方法中都包含map这个单词，它在上下文中的意思是“把一个变成另一个”。因此，map()方法可以让我们把数组中的每个元素变成">
 
 
 
@@ -323,6 +323,13 @@
       
         <p>本文译自Paul Hudson <a href="https://www.hackingwithswift.com/articles/205/whats-the-difference-between-map-flatmap-and-compactmap" target="_blank" rel="noopener">原文</a></p>
 <p><code>Swift</code>中有<code>map()</code>，<code>compactMap()</code>和<code>flatMap()</code>方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻<code>map()</code>、<code>compactMap()</code>以及<code>flatMap()</code>来帮助你更好的理解和应用它们。</p>
+<p>这三个方法中都包含<code>map</code>这个单词，它在上下文中的意思是“把一个变成另一个”。因此，<code>map()</code>方法可以让我们把数组中的每个元素变成它自身的两倍，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let numbers = [1, 2, 3, 4, 5]</span><br><span class="line">let double = numbers.map &#123;$0 * 2&#125;</span><br></pre></td></tr></table></figure>
+<p><code>$0</code>是第一个参数的缩写，通过闭包，它会变成<code>1 * 2</code>， <code>2 * 2</code>， <code>3 * 2</code>等等，并使用乘后的结果替换之前的元素的值。</p>
+<p>以下方法会把每个元素都改为大写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let wizards = [&quot;Harry&quot;, &quot;Hermione&quot;, &quot;Ron&quot;]</span><br><span class="line">let uppercased = wizards.map &#123; $0.uppercased() &#125;</span><br></pre></td></tr></table></figure>
+<p>以下方法会把每个元素由<code>Int</code>类型转<code>String</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let numbers = [1, 2, 3, 4, 5]</span><br><span class="line">let strings = numbers.map &#123; String($0) &#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
