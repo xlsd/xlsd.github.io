@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="大象席地而坐">
 <meta property="og:description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。 这三个方法中都包含map这个单词，它在上下文中的意思是“把一个变成另一个”。因此，map()方法可以让我们把数组中的每个元素变成">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-18T15:43:20.904Z">
+<meta property="og:updated_time" content="2020-07-19T09:26:47.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="map()、flatMap()和compactMap()之间有什么区别？">
 <meta name="twitter:description" content="本文译自Paul Hudson 原文 Swift中有map()，compactMap()和flatMap()方法，但是尽管他们听起来很相似，但功能却完全不同。因此，这篇文章我们将探寻map()、compactMap()以及flatMap()来帮助你更好的理解和应用它们。 这三个方法中都包含map这个单词，它在上下文中的意思是“把一个变成另一个”。因此，map()方法可以让我们把数组中的每个元素变成">
@@ -330,6 +330,20 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let wizards = [&quot;Harry&quot;, &quot;Hermione&quot;, &quot;Ron&quot;]</span><br><span class="line">let uppercased = wizards.map &#123; $0.uppercased() &#125;</span><br></pre></td></tr></table></figure>
 <p>以下方法会把每个元素由<code>Int</code>类型转<code>String</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let numbers = [1, 2, 3, 4, 5]</span><br><span class="line">let strings = numbers.map &#123; String($0) &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="compactMap-转换和解包"><a href="#compactMap-转换和解包" class="headerlink" title="compactMap:转换和解包"></a><code>compactMap</code>:转换和解包</h5><p>使用可选型可能会很烦人，但是<code>compactMap()</code>方法能让它更简单: 它能转换(正是<code>map</code>的部分意思)并强解包所有的可选型，并将集合中的<code>nil</code>丢弃掉。</p>
+<p>因此，这行代码的作用是讲<code>String</code>类型转<code>Int</code>，会发现，结果数组中得到的元素的类型都是<code>Interger</code>类型，而不是<code>Interger</code>的可选型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let definitelyNumbers = strings.compactMap &#123; Int($0) &#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>Swfit</code>的很多地方可能会返回可选型，包括<code>try?</code>、 <code>as?</code>比如从<code>interger</code>初始化<code>String</code>时，这些都非常适用<code>compactMap()</code></p>
+<p>比如，如果你想获取一个<code>UIView</code>的所有<code>subviews</code>中的<code>UIImageView</code>，你可以这样写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let imageViews = view.subviews.compactMap &#123; $0 as? UIImageView&#125;</span><br></pre></td></tr></table></figure>
+<p>或者如果你有一个<code>String</code>数组，想知道哪些是有效的<code>URLs</code>，你可以这样写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let urls = urlStrings.compactMap &#123; URL(string) &#125;</span><br></pre></td></tr></table></figure>
+<p>小结: <code>map()</code>将替换容器中的值，使用特定的代码将一个转换成另一个。<code>compactMap()</code>也做相同的事情，但是如果转换过程中，返回的是一个可选型，它将会强解包，并丢弃为<code>nil</code>的值。</p>
+<p><code>Optional map()</code>:只有有值的时候才会转换。<br>如果你细想一下，可选型与数组类似：他们也有一个存取的容器，当我们查看可选型容器的时候（当我们解包可选型），我们可以获得一个值或者<code>nil</code>。</p>
+<p>这意味着<code>map()</code>方法在可选型中也存在: 提供一个闭包，替换容器中的值(可选型)。如果这个可选型为空，<code>map()</code>什么都不做，并返回一个<code>nil</code>。</p>
+<h5 id="flatMap-转换并重置"><a href="#flatMap-转换并重置" class="headerlink" title="flatMap(): 转换并重置"></a><code>flatMap()</code>: 转换并重置</h5><p>我们可以看到<code>map()</code>可以将<code>Interger</code>类型的数组转成<code>String</code>类型的数组，同时也知道了<code>compactMap()</code>可以解包可选型，并丢弃值为<code>nil</code>的元素。现在回过头来看看<code>map()</code>对可选型的操作: 如果有一个值被强解包、转换、加包，但是如果它是一个<code>nil</code>，那被操作后它依然是<code>nil</code></p>
+<p>这个结果是<code>Int?</code>而不是<code>Int？？</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let number: String? = getUser(id: 97)</span><br><span class="line">let result = number.flatMap &#123; Int($0) &#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -414,8 +428,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -468,6 +491,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#compactMap-转换和解包"><span class="nav-number">1.</span> <span class="nav-text">compactMap:转换和解包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#flatMap-转换并重置"><span class="nav-number">2.</span> <span class="nav-text">flatMap(): 转换并重置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
